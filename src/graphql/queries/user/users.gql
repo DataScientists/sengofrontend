@@ -1,0 +1,13 @@
+query Users($after: Cursor, $first: Int, $before: Cursor, $last: Int, $where: UserWhereInput) {
+  users(after: $after, before: $before, first: $first, where: $where) {
+    edges {
+      node {
+        ...User
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+    totalCount
+  }
+}

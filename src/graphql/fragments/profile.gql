@@ -1,0 +1,11 @@
+fragment Profile on Profile {
+  id
+  name
+  title
+  urn
+}
+
+fragment ProfileTitleGroup on ProfileTitleGroup {
+  title
+  count
+}

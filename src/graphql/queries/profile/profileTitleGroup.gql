@@ -1,0 +1,5 @@
+query GroupProfilesByTitle($searchTerm: String, $minCount: Int!) {
+  profilesByTitle(searchTerm: $searchTerm, minCount: $minCount) {
+    ...ProfileTitleGroup
+  }
+}

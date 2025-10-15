@@ -1,0 +1,31 @@
+import { Meta, ColorPalette, ColorItem } from '@storybook/blocks';
+import { TabsState } from '@storybook/components';
+
+
+<Meta title="Design System/Colors" />
+
+# Colors
+
+<TabsState initial="light">
+
+<div id="light" title="Light Mode">
+  <ColorPalette>
+    <ColorItem key="brand" title="Brand" subtitle="brand" colors={['#4C47CC']} />
+    <ColorItem key="brand-light" title="Brand Light" subtitle="brand.light" colors={['#B1AFE9']} />
+    <ColorItem key="brand-dark" title="Brand Dark" subtitle="brand.dark" colors={['#211F70']} />
+    <ColorItem key="title-light" title="Title Light" subtitle="title.light" colors={['#ffffff']} />
+    <ColorItem key="title-dark" title="Title Dark" subtitle="title.dark" colors={['#343149']} />
+  </ColorPalette>
+</div>
+<div id="dark" title="Dark Mode">
+  <ColorPalette>
+    <ColorItem key="brand" title="Brand" subtitle="brand" colors={['#4C47CC']} />
+    <ColorItem key="brand-dark" title="Brand Dark" subtitle="brand.dark" colors={['#211F70']} />
+    <ColorItem key="brand-light" title="Brand Light" subtitle="brand.light" colors={['#B1AFE9']} />
+    <ColorItem key="title-dark" title="Title Dark" subtitle="title.dark" colors={['#343149']} />
+    <ColorItem key="title-light" title="Title Light" subtitle="title.light" colors={['#ffffff']} />
+
+  </ColorPalette>
+</div>
+
+</TabsState>

@@ -1,0 +1,30 @@
+import { Meta, Description } from '@storybook/blocks';
+import { Figma } from '@storybook/addon-designs/blocks';
+import * as ButtonStories from './Button.stories';
+import { StoryGrid } from '../StoryGrid/StoryGrid';
+
+# Button
+
+<Meta of={ButtonStories} />
+<Description of={ButtonStories} />
+
+> The button component is used to trigger an action or event, such as submitting a form, opening a dialog, canceling an action, or performing a delete operation.
+
+### Button variants
+
+<StoryGrid of={ButtonStories} />
+
+Then use it in your application such as:
+
+```jsx
+import { Button } from '@components/ui/atom';
+
+export const Page = () => {
+  const getFood = () => {};
+  return <Button onClick={getFood}>Click me</Button>;
+};
+```
+
+### Design specs
+
+<Figma url="https://www.figma.com/design/nr9d48NR1F1NrTYN8TRz5d/UPP?node-id=450-1343&t=T6zxLLfGzsrNSTu5-1" />

@@ -1,0 +1,7 @@
+fragment AuthPayload on AuthPayload {
+  accessToken
+  refreshToken
+  user {
+    ...User
+  }
+}

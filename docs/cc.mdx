@@ -1,0 +1,41 @@
+import { Meta, ColorPalette, ColorItem } from '@storybook/blocks';
+import { colorTokens } from '../src/shared/chakra/themeSettings/tokens/colors.ts';
+
+<Meta
+  title="Design System/Colorsss"
+  parameters={{
+    previewTabs: {
+      'storybook/docs/panel': { hidden: true },
+    },
+    viewMode: 'docs',
+  }}
+/>
+
+# Color Palette
+
+{Object.entries(colorTokens.colors).map(([category, values]) => (
+
+<div key={category}>
+  <h2>{category.charAt(0).toUpperCase() + category.slice(1)}</h2>
+  <ColorPalette>
+    {typeof values.value === 'string' ? (
+      // Single value colors (like primary)
+      <ColorItem
+        title={`colors.${category}`}
+        subtitle={values.value}
+        colors={{ [category]: values.value }}
+      />
+    ) : (
+      // Color scales (like brand, body, etc.)
+      Object.entries(values).map(([shade, colorData]) => (
+        <ColorItem
+          key={`${category}-${shade}`}
+          title={`colors.${category}.${shade}`}
+          subtitle={colorData.value}
+          colors={{ [`${category}.${shade}`]: colorData.value }}
+        />
+      ))
+    )}
+  </ColorPalette>
+</div>
+))}

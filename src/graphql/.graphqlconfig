@@ -1,0 +1,13 @@
+
+{
+  "name": "App GraphQL Schema",
+  "schemaPath": "__schema__.graphql",
+  "extensions": {
+    "endpoints": {
+      "Default GraphQL Endpoint": {
+        "url": "http://localhost:8080/api/playground",
+        "introspect": false
+      }
+    }
+  }
+}

@@ -1,0 +1,1 @@
+export { ProfileTitleChart } from './ProfileTitleChart';

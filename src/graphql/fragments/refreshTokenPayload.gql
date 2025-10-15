@@ -1,0 +1,4 @@
+fragment RefreshTokenFragment on RefreshTokenPayload {
+  accessToken
+  refreshToken
+}
