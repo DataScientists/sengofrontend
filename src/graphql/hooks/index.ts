@@ -39,12 +39,91 @@ export const ProfileTitleGroupFragmentDoc = gql`
   count
 }
     `;
+export const ProfileEntryFragmentDoc = gql`
+    fragment ProfileEntry on ProfileEntry {
+  id
+  linkedinUrn
+  gender
+  status
+  lastFetchedAt
+  fetchCount
+  profileData
+  createdAt
+  updatedAt
+}
+    `;
 export const RefreshTokenFragmentFragmentDoc = gql`
     fragment RefreshTokenFragment on RefreshTokenPayload {
   accessToken
   refreshToken
 }
     `;
+export const CreateProfileEntryDocument = gql`
+    mutation CreateProfileEntry($input: CreateProfileEntryInput!) {
+  createProfileEntry(input: $input) {
+    ...ProfileEntry
+  }
+}
+    ${ProfileEntryFragmentDoc}`;
+export type CreateProfileEntryMutationFn = Apollo.MutationFunction<import('../types').CreateProfileEntryMutation, import('../types').CreateProfileEntryMutationVariables>;
+
+/**
+ * __useCreateProfileEntryMutation__
+ *
+ * To run a mutation, you first call `useCreateProfileEntryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateProfileEntryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createProfileEntryMutation, { data, loading, error }] = useCreateProfileEntryMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateProfileEntryMutation(baseOptions?: Apollo.MutationHookOptions<import('../types').CreateProfileEntryMutation, import('../types').CreateProfileEntryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<import('../types').CreateProfileEntryMutation, import('../types').CreateProfileEntryMutationVariables>(CreateProfileEntryDocument, options);
+      }
+export type CreateProfileEntryMutationHookResult = ReturnType<typeof useCreateProfileEntryMutation>;
+export type CreateProfileEntryMutationResult = Apollo.MutationResult<import('../types').CreateProfileEntryMutation>;
+export type CreateProfileEntryMutationOptions = Apollo.BaseMutationOptions<import('../types').CreateProfileEntryMutation, import('../types').CreateProfileEntryMutationVariables>;
+export const UpdateProfileEntryDocument = gql`
+    mutation UpdateProfileEntry($input: UpdateProfileEntryInput!) {
+  updateProfileEntry(input: $input) {
+    ...ProfileEntry
+  }
+}
+    ${ProfileEntryFragmentDoc}`;
+export type UpdateProfileEntryMutationFn = Apollo.MutationFunction<import('../types').UpdateProfileEntryMutation, import('../types').UpdateProfileEntryMutationVariables>;
+
+/**
+ * __useUpdateProfileEntryMutation__
+ *
+ * To run a mutation, you first call `useUpdateProfileEntryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProfileEntryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateProfileEntryMutation, { data, loading, error }] = useUpdateProfileEntryMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateProfileEntryMutation(baseOptions?: Apollo.MutationHookOptions<import('../types').UpdateProfileEntryMutation, import('../types').UpdateProfileEntryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<import('../types').UpdateProfileEntryMutation, import('../types').UpdateProfileEntryMutationVariables>(UpdateProfileEntryDocument, options);
+      }
+export type UpdateProfileEntryMutationHookResult = ReturnType<typeof useUpdateProfileEntryMutation>;
+export type UpdateProfileEntryMutationResult = Apollo.MutationResult<import('../types').UpdateProfileEntryMutation>;
+export type UpdateProfileEntryMutationOptions = Apollo.BaseMutationOptions<import('../types').UpdateProfileEntryMutation, import('../types').UpdateProfileEntryMutationVariables>;
 export const LoginDocument = gql`
     mutation Login($input: LoginInput!) {
   login(input: $input) {
@@ -210,6 +289,105 @@ export type ProfilesQueryHookResult = ReturnType<typeof useProfilesQuery>;
 export type ProfilesLazyQueryHookResult = ReturnType<typeof useProfilesLazyQuery>;
 export type ProfilesSuspenseQueryHookResult = ReturnType<typeof useProfilesSuspenseQuery>;
 export type ProfilesQueryResult = Apollo.QueryResult<import('../types').ProfilesQuery, import('../types').ProfilesQueryVariables>;
+export const ProfileEntriesDocument = gql`
+    query ProfileEntries($after: Cursor, $first: Int, $before: Cursor, $last: Int, $where: ProfileEntryWhereInput) {
+  profileEntries(
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+    where: $where
+  ) {
+    edges {
+      node {
+        ...ProfileEntry
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+    totalCount
+  }
+}
+    ${ProfileEntryFragmentDoc}
+${PageInfoFragmentDoc}`;
+
+/**
+ * __useProfileEntriesQuery__
+ *
+ * To run a query within a React component, call `useProfileEntriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProfileEntriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProfileEntriesQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      before: // value for 'before'
+ *      last: // value for 'last'
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useProfileEntriesQuery(baseOptions?: Apollo.QueryHookOptions<import('../types').ProfileEntriesQuery, import('../types').ProfileEntriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<import('../types').ProfileEntriesQuery, import('../types').ProfileEntriesQueryVariables>(ProfileEntriesDocument, options);
+      }
+export function useProfileEntriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<import('../types').ProfileEntriesQuery, import('../types').ProfileEntriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<import('../types').ProfileEntriesQuery, import('../types').ProfileEntriesQueryVariables>(ProfileEntriesDocument, options);
+        }
+export function useProfileEntriesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<import('../types').ProfileEntriesQuery, import('../types').ProfileEntriesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<import('../types').ProfileEntriesQuery, import('../types').ProfileEntriesQueryVariables>(ProfileEntriesDocument, options);
+        }
+export type ProfileEntriesQueryHookResult = ReturnType<typeof useProfileEntriesQuery>;
+export type ProfileEntriesLazyQueryHookResult = ReturnType<typeof useProfileEntriesLazyQuery>;
+export type ProfileEntriesSuspenseQueryHookResult = ReturnType<typeof useProfileEntriesSuspenseQuery>;
+export type ProfileEntriesQueryResult = Apollo.QueryResult<import('../types').ProfileEntriesQuery, import('../types').ProfileEntriesQueryVariables>;
+export const ProfileEntryDocument = gql`
+    query ProfileEntry($id: ID!) {
+  profileEntry(id: $id) {
+    ...ProfileEntry
+  }
+}
+    ${ProfileEntryFragmentDoc}`;
+
+/**
+ * __useProfileEntryQuery__
+ *
+ * To run a query within a React component, call `useProfileEntryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProfileEntryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProfileEntryQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useProfileEntryQuery(baseOptions: Apollo.QueryHookOptions<import('../types').ProfileEntryQuery, import('../types').ProfileEntryQueryVariables> & ({ variables: import('../types').ProfileEntryQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<import('../types').ProfileEntryQuery, import('../types').ProfileEntryQueryVariables>(ProfileEntryDocument, options);
+      }
+export function useProfileEntryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<import('../types').ProfileEntryQuery, import('../types').ProfileEntryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<import('../types').ProfileEntryQuery, import('../types').ProfileEntryQueryVariables>(ProfileEntryDocument, options);
+        }
+export function useProfileEntrySuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<import('../types').ProfileEntryQuery, import('../types').ProfileEntryQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<import('../types').ProfileEntryQuery, import('../types').ProfileEntryQueryVariables>(ProfileEntryDocument, options);
+        }
+export type ProfileEntryQueryHookResult = ReturnType<typeof useProfileEntryQuery>;
+export type ProfileEntryLazyQueryHookResult = ReturnType<typeof useProfileEntryLazyQuery>;
+export type ProfileEntrySuspenseQueryHookResult = ReturnType<typeof useProfileEntrySuspenseQuery>;
+export type ProfileEntryQueryResult = Apollo.QueryResult<import('../types').ProfileEntryQuery, import('../types').ProfileEntryQueryVariables>;
 export const UsersDocument = gql`
     query Users($after: Cursor, $first: Int, $before: Cursor, $last: Int, $where: UserWhereInput) {
   users(after: $after, before: $before, first: $first, where: $where) {

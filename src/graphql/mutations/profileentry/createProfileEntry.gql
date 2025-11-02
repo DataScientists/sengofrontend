@@ -1,0 +1,5 @@
+mutation CreateProfileEntry($input: CreateProfileEntryInput!) {
+  createProfileEntry(input: $input) {
+    ...ProfileEntry
+  }
+}

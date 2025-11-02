@@ -1,5 +1,6 @@
 import { AppLayout } from "@components/templates";
 import { WindowTitle } from "@components/ui/atoms";
+import { ProfileEntriesPage } from "@components/features/pages/ProfileEntriesPage";
 import errorTracker from "@shared/errorTracking/errorTracker";
 import { SentryRoutes } from "@shared/router";
 import { ErrorBoundary } from "react-error-boundary";
@@ -20,6 +21,7 @@ export const Routes: React.FCWithChildren = ({ children }) => {
         <AppLayout>
           <SentryRoutes>
             <Route path="/" Component={App} />
+            <Route path="/profile-entries" Component={ProfileEntriesPage} />
             {children}
           </SentryRoutes>
         </AppLayout>

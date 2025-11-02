@@ -1,0 +1,7 @@
+query ProfileEntry(
+  $id: ID!
+) {
+  profileEntry(id: $id) {
+   ...ProfileEntry
+  }
+}

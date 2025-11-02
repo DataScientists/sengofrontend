@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-redeclare @typescript-eslint/no-use-before-define,@typescript-eslint/no-unused-vars,no-prototype-builtins */
-import type { AuthPayload, CreateProfileInput, CreateTodoInput, CreateUserInput, LoginInput, Node, PageInfo, Profile, ProfileConnection, ProfileEdge, ProfileTitleGroup, ProfileWhereInput, RefreshTokenPayload, Todo, TodoConnection, TodoEdge, TodoWhereInput, UpdateProfileInput, UpdateTodoInput, UpdateUserInput, User, UserConnection, UserEdge, UserWhereInput, TodoStatus } from './index.mock';
+import type { AuthPayload, CreateProfileEntryInput, CreateProfileInput, CreateTodoInput, CreateUserInput, LoginInput, Node, PageInfo, Profile, ProfileConnection, ProfileEdge, ProfileEntry, ProfileEntryConnection, ProfileEntryEdge, ProfileEntryWhereInput, ProfileTitleGroup, ProfileWhereInput, RefreshTokenPayload, Todo, TodoConnection, TodoEdge, TodoWhereInput, UpdateProfileEntryInput, UpdateProfileInput, UpdateTodoInput, UpdateUserInput, User, UserConnection, UserEdge, UserWhereInput, ProfileEntryStatus, TodoStatus } from './index.mock';
 
 export const mockAuthPayload = (overrides?: Partial<AuthPayload>): { __typename: 'AuthPayload' } & AuthPayload => {
     return {
@@ -7,6 +7,13 @@ export const mockAuthPayload = (overrides?: Partial<AuthPayload>): { __typename:
         accessToken: overrides && overrides.hasOwnProperty('accessToken') ? overrides.accessToken! : 'vorax',
         refreshToken: overrides && overrides.hasOwnProperty('refreshToken') ? overrides.refreshToken! : 'temperantia',
         user: overrides && overrides.hasOwnProperty('user') ? overrides.user! : mockUser(),
+    };
+};
+
+export const mockCreateProfileEntryInput = (overrides?: Partial<CreateProfileEntryInput>): CreateProfileEntryInput => {
+    return {
+        gender: overrides && overrides.hasOwnProperty('gender') ? overrides.gender! : 'quod',
+        linkedinUrn: overrides && overrides.hasOwnProperty('linkedinUrn') ? overrides.linkedinUrn! : 'maiores',
     };
 };
 
@@ -88,6 +95,157 @@ export const mockProfileEdge = (overrides?: Partial<ProfileEdge>): { __typename:
         __typename: 'ProfileEdge',
         cursor: overrides && overrides.hasOwnProperty('cursor') ? overrides.cursor! : string,
         node: overrides && overrides.hasOwnProperty('node') ? overrides.node! : mockProfile(),
+    };
+};
+
+export const mockProfileEntry = (overrides?: Partial<ProfileEntry>): { __typename: 'ProfileEntry' } & ProfileEntry => {
+    return {
+        __typename: 'ProfileEntry',
+        createdAt: overrides && overrides.hasOwnProperty('createdAt') ? overrides.createdAt! : string,
+        fetchCount: overrides && overrides.hasOwnProperty('fetchCount') ? overrides.fetchCount! : 1232,
+        gender: overrides && overrides.hasOwnProperty('gender') ? overrides.gender! : 'ancilla',
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'e5f97f14-0f65-4eb6-b861-d1cbc9fc0ab4',
+        lastFetchedAt: overrides && overrides.hasOwnProperty('lastFetchedAt') ? overrides.lastFetchedAt! : string,
+        linkedinUrn: overrides && overrides.hasOwnProperty('linkedinUrn') ? overrides.linkedinUrn! : 'aperio',
+        profileData: overrides && overrides.hasOwnProperty('profileData') ? overrides.profileData! : 'curiositas',
+        status: overrides && overrides.hasOwnProperty('status') ? overrides.status! : ('COMPLETED' as ProfileEntryStatus),
+        updatedAt: overrides && overrides.hasOwnProperty('updatedAt') ? overrides.updatedAt! : string,
+    };
+};
+
+export const mockProfileEntryConnection = (overrides?: Partial<ProfileEntryConnection>): { __typename: 'ProfileEntryConnection' } & ProfileEntryConnection => {
+    return {
+        __typename: 'ProfileEntryConnection',
+        edges: overrides && overrides.hasOwnProperty('edges') ? overrides.edges! : [mockProfileEntryEdge()],
+        pageInfo: overrides && overrides.hasOwnProperty('pageInfo') ? overrides.pageInfo! : mockPageInfo(),
+        totalCount: overrides && overrides.hasOwnProperty('totalCount') ? overrides.totalCount! : 2232,
+    };
+};
+
+export const mockProfileEntryEdge = (overrides?: Partial<ProfileEntryEdge>): { __typename: 'ProfileEntryEdge' } & ProfileEntryEdge => {
+    return {
+        __typename: 'ProfileEntryEdge',
+        cursor: overrides && overrides.hasOwnProperty('cursor') ? overrides.cursor! : string,
+        node: overrides && overrides.hasOwnProperty('node') ? overrides.node! : mockProfileEntry(),
+    };
+};
+
+export const mockProfileEntryWhereInput = (overrides?: Partial<ProfileEntryWhereInput>): ProfileEntryWhereInput => {
+    return {
+        and: overrides && overrides.hasOwnProperty('and') ? overrides.and! : [mockProfileEntryWhereInput()],
+        createdAt: overrides && overrides.hasOwnProperty('createdAt') ? overrides.createdAt! : string,
+        createdAtGT: overrides && overrides.hasOwnProperty('createdAtGT') ? overrides.createdAtGT! : string,
+        createdAtGTE: overrides && overrides.hasOwnProperty('createdAtGTE') ? overrides.createdAtGTE! : string,
+        createdAtIn: overrides && overrides.hasOwnProperty('createdAtIn') ? overrides.createdAtIn! : [string],
+        createdAtLT: overrides && overrides.hasOwnProperty('createdAtLT') ? overrides.createdAtLT! : string,
+        createdAtLTE: overrides && overrides.hasOwnProperty('createdAtLTE') ? overrides.createdAtLTE! : string,
+        createdAtNEQ: overrides && overrides.hasOwnProperty('createdAtNEQ') ? overrides.createdAtNEQ! : string,
+        createdAtNotIn: overrides && overrides.hasOwnProperty('createdAtNotIn') ? overrides.createdAtNotIn! : [string],
+        errorMessage: overrides && overrides.hasOwnProperty('errorMessage') ? overrides.errorMessage! : 'esse',
+        errorMessageContains: overrides && overrides.hasOwnProperty('errorMessageContains') ? overrides.errorMessageContains! : 'verto',
+        errorMessageContainsFold: overrides && overrides.hasOwnProperty('errorMessageContainsFold') ? overrides.errorMessageContainsFold! : 'crux',
+        errorMessageEqualFold: overrides && overrides.hasOwnProperty('errorMessageEqualFold') ? overrides.errorMessageEqualFold! : 'angelus',
+        errorMessageGT: overrides && overrides.hasOwnProperty('errorMessageGT') ? overrides.errorMessageGT! : 'certus',
+        errorMessageGTE: overrides && overrides.hasOwnProperty('errorMessageGTE') ? overrides.errorMessageGTE! : 'clibanus',
+        errorMessageHasPrefix: overrides && overrides.hasOwnProperty('errorMessageHasPrefix') ? overrides.errorMessageHasPrefix! : 'carmen',
+        errorMessageHasSuffix: overrides && overrides.hasOwnProperty('errorMessageHasSuffix') ? overrides.errorMessageHasSuffix! : 'solium',
+        errorMessageIn: overrides && overrides.hasOwnProperty('errorMessageIn') ? overrides.errorMessageIn! : ['blandior'],
+        errorMessageIsNil: overrides && overrides.hasOwnProperty('errorMessageIsNil') ? overrides.errorMessageIsNil! : true,
+        errorMessageLT: overrides && overrides.hasOwnProperty('errorMessageLT') ? overrides.errorMessageLT! : 'cursus',
+        errorMessageLTE: overrides && overrides.hasOwnProperty('errorMessageLTE') ? overrides.errorMessageLTE! : 'artificiose',
+        errorMessageNEQ: overrides && overrides.hasOwnProperty('errorMessageNEQ') ? overrides.errorMessageNEQ! : 'suppellex',
+        errorMessageNotIn: overrides && overrides.hasOwnProperty('errorMessageNotIn') ? overrides.errorMessageNotIn! : ['avaritia'],
+        errorMessageNotNil: overrides && overrides.hasOwnProperty('errorMessageNotNil') ? overrides.errorMessageNotNil! : true,
+        fetchCount: overrides && overrides.hasOwnProperty('fetchCount') ? overrides.fetchCount! : 4868,
+        fetchCountGT: overrides && overrides.hasOwnProperty('fetchCountGT') ? overrides.fetchCountGT! : 8253,
+        fetchCountGTE: overrides && overrides.hasOwnProperty('fetchCountGTE') ? overrides.fetchCountGTE! : 9972,
+        fetchCountIn: overrides && overrides.hasOwnProperty('fetchCountIn') ? overrides.fetchCountIn! : [910],
+        fetchCountLT: overrides && overrides.hasOwnProperty('fetchCountLT') ? overrides.fetchCountLT! : 7143,
+        fetchCountLTE: overrides && overrides.hasOwnProperty('fetchCountLTE') ? overrides.fetchCountLTE! : 2062,
+        fetchCountNEQ: overrides && overrides.hasOwnProperty('fetchCountNEQ') ? overrides.fetchCountNEQ! : 7775,
+        fetchCountNotIn: overrides && overrides.hasOwnProperty('fetchCountNotIn') ? overrides.fetchCountNotIn! : [3513],
+        gender: overrides && overrides.hasOwnProperty('gender') ? overrides.gender! : 'vitae',
+        genderContains: overrides && overrides.hasOwnProperty('genderContains') ? overrides.genderContains! : 'iusto',
+        genderContainsFold: overrides && overrides.hasOwnProperty('genderContainsFold') ? overrides.genderContainsFold! : 'viridis',
+        genderEqualFold: overrides && overrides.hasOwnProperty('genderEqualFold') ? overrides.genderEqualFold! : 'valeo',
+        genderGT: overrides && overrides.hasOwnProperty('genderGT') ? overrides.genderGT! : 'officiis',
+        genderGTE: overrides && overrides.hasOwnProperty('genderGTE') ? overrides.genderGTE! : 'vestrum',
+        genderHasPrefix: overrides && overrides.hasOwnProperty('genderHasPrefix') ? overrides.genderHasPrefix! : 'absorbeo',
+        genderHasSuffix: overrides && overrides.hasOwnProperty('genderHasSuffix') ? overrides.genderHasSuffix! : 'agnitio',
+        genderIn: overrides && overrides.hasOwnProperty('genderIn') ? overrides.genderIn! : ['vitium'],
+        genderIsNil: overrides && overrides.hasOwnProperty('genderIsNil') ? overrides.genderIsNil! : false,
+        genderLT: overrides && overrides.hasOwnProperty('genderLT') ? overrides.genderLT! : 'valeo',
+        genderLTE: overrides && overrides.hasOwnProperty('genderLTE') ? overrides.genderLTE! : 'adstringo',
+        genderNEQ: overrides && overrides.hasOwnProperty('genderNEQ') ? overrides.genderNEQ! : 'subseco',
+        genderNotIn: overrides && overrides.hasOwnProperty('genderNotIn') ? overrides.genderNotIn! : ['contabesco'],
+        genderNotNil: overrides && overrides.hasOwnProperty('genderNotNil') ? overrides.genderNotNil! : false,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'a61b102a-8af3-4b89-8d1e-1245d8b206d2',
+        idGT: overrides && overrides.hasOwnProperty('idGT') ? overrides.idGT! : '0314ea85-9474-46ac-ad7e-3c400671b321',
+        idGTE: overrides && overrides.hasOwnProperty('idGTE') ? overrides.idGTE! : '4a3771bd-fc7f-477a-ad7e-a4d3694cca9b',
+        idIn: overrides && overrides.hasOwnProperty('idIn') ? overrides.idIn! : ['41551f98-7337-4f90-a4fa-7ba8345c023a'],
+        idLT: overrides && overrides.hasOwnProperty('idLT') ? overrides.idLT! : '5684998b-f4b9-44c4-a6cc-e7cd42099a62',
+        idLTE: overrides && overrides.hasOwnProperty('idLTE') ? overrides.idLTE! : 'ac6b9155-0cb2-481c-8aa8-e437caaad882',
+        idNEQ: overrides && overrides.hasOwnProperty('idNEQ') ? overrides.idNEQ! : 'bdf456b1-3f12-4ab1-8213-419dde98d508',
+        idNotIn: overrides && overrides.hasOwnProperty('idNotIn') ? overrides.idNotIn! : ['6a4f5816-b8a9-45f7-8b68-5e64060836ed'],
+        lastFetchedAt: overrides && overrides.hasOwnProperty('lastFetchedAt') ? overrides.lastFetchedAt! : string,
+        lastFetchedAtGT: overrides && overrides.hasOwnProperty('lastFetchedAtGT') ? overrides.lastFetchedAtGT! : string,
+        lastFetchedAtGTE: overrides && overrides.hasOwnProperty('lastFetchedAtGTE') ? overrides.lastFetchedAtGTE! : string,
+        lastFetchedAtIn: overrides && overrides.hasOwnProperty('lastFetchedAtIn') ? overrides.lastFetchedAtIn! : [string],
+        lastFetchedAtIsNil: overrides && overrides.hasOwnProperty('lastFetchedAtIsNil') ? overrides.lastFetchedAtIsNil! : true,
+        lastFetchedAtLT: overrides && overrides.hasOwnProperty('lastFetchedAtLT') ? overrides.lastFetchedAtLT! : string,
+        lastFetchedAtLTE: overrides && overrides.hasOwnProperty('lastFetchedAtLTE') ? overrides.lastFetchedAtLTE! : string,
+        lastFetchedAtNEQ: overrides && overrides.hasOwnProperty('lastFetchedAtNEQ') ? overrides.lastFetchedAtNEQ! : string,
+        lastFetchedAtNotIn: overrides && overrides.hasOwnProperty('lastFetchedAtNotIn') ? overrides.lastFetchedAtNotIn! : [string],
+        lastFetchedAtNotNil: overrides && overrides.hasOwnProperty('lastFetchedAtNotNil') ? overrides.lastFetchedAtNotNil! : true,
+        linkedinUrn: overrides && overrides.hasOwnProperty('linkedinUrn') ? overrides.linkedinUrn! : 'decet',
+        linkedinUrnContains: overrides && overrides.hasOwnProperty('linkedinUrnContains') ? overrides.linkedinUrnContains! : 'ex',
+        linkedinUrnContainsFold: overrides && overrides.hasOwnProperty('linkedinUrnContainsFold') ? overrides.linkedinUrnContainsFold! : 'quam',
+        linkedinUrnEqualFold: overrides && overrides.hasOwnProperty('linkedinUrnEqualFold') ? overrides.linkedinUrnEqualFold! : 'cibo',
+        linkedinUrnGT: overrides && overrides.hasOwnProperty('linkedinUrnGT') ? overrides.linkedinUrnGT! : 'comitatus',
+        linkedinUrnGTE: overrides && overrides.hasOwnProperty('linkedinUrnGTE') ? overrides.linkedinUrnGTE! : 'suscipit',
+        linkedinUrnHasPrefix: overrides && overrides.hasOwnProperty('linkedinUrnHasPrefix') ? overrides.linkedinUrnHasPrefix! : 'casus',
+        linkedinUrnHasSuffix: overrides && overrides.hasOwnProperty('linkedinUrnHasSuffix') ? overrides.linkedinUrnHasSuffix! : 'congregatio',
+        linkedinUrnIn: overrides && overrides.hasOwnProperty('linkedinUrnIn') ? overrides.linkedinUrnIn! : ['placeat'],
+        linkedinUrnLT: overrides && overrides.hasOwnProperty('linkedinUrnLT') ? overrides.linkedinUrnLT! : 'amoveo',
+        linkedinUrnLTE: overrides && overrides.hasOwnProperty('linkedinUrnLTE') ? overrides.linkedinUrnLTE! : 'corporis',
+        linkedinUrnNEQ: overrides && overrides.hasOwnProperty('linkedinUrnNEQ') ? overrides.linkedinUrnNEQ! : 'vehemens',
+        linkedinUrnNotIn: overrides && overrides.hasOwnProperty('linkedinUrnNotIn') ? overrides.linkedinUrnNotIn! : ['nam'],
+        not: overrides && overrides.hasOwnProperty('not') ? overrides.not! : mockProfileEntryWhereInput(),
+        or: overrides && overrides.hasOwnProperty('or') ? overrides.or! : [mockProfileEntryWhereInput()],
+        rawResponseS3Key: overrides && overrides.hasOwnProperty('rawResponseS3Key') ? overrides.rawResponseS3Key! : 'vilis',
+        rawResponseS3KeyContains: overrides && overrides.hasOwnProperty('rawResponseS3KeyContains') ? overrides.rawResponseS3KeyContains! : 'spero',
+        rawResponseS3KeyContainsFold: overrides && overrides.hasOwnProperty('rawResponseS3KeyContainsFold') ? overrides.rawResponseS3KeyContainsFold! : 'aurum',
+        rawResponseS3KeyEqualFold: overrides && overrides.hasOwnProperty('rawResponseS3KeyEqualFold') ? overrides.rawResponseS3KeyEqualFold! : 'despecto',
+        rawResponseS3KeyGT: overrides && overrides.hasOwnProperty('rawResponseS3KeyGT') ? overrides.rawResponseS3KeyGT! : 'calculus',
+        rawResponseS3KeyGTE: overrides && overrides.hasOwnProperty('rawResponseS3KeyGTE') ? overrides.rawResponseS3KeyGTE! : 'credo',
+        rawResponseS3KeyHasPrefix: overrides && overrides.hasOwnProperty('rawResponseS3KeyHasPrefix') ? overrides.rawResponseS3KeyHasPrefix! : 'suppono',
+        rawResponseS3KeyHasSuffix: overrides && overrides.hasOwnProperty('rawResponseS3KeyHasSuffix') ? overrides.rawResponseS3KeyHasSuffix! : 'corrumpo',
+        rawResponseS3KeyIn: overrides && overrides.hasOwnProperty('rawResponseS3KeyIn') ? overrides.rawResponseS3KeyIn! : ['argentum'],
+        rawResponseS3KeyIsNil: overrides && overrides.hasOwnProperty('rawResponseS3KeyIsNil') ? overrides.rawResponseS3KeyIsNil! : false,
+        rawResponseS3KeyLT: overrides && overrides.hasOwnProperty('rawResponseS3KeyLT') ? overrides.rawResponseS3KeyLT! : 'impedit',
+        rawResponseS3KeyLTE: overrides && overrides.hasOwnProperty('rawResponseS3KeyLTE') ? overrides.rawResponseS3KeyLTE! : 'tamen',
+        rawResponseS3KeyNEQ: overrides && overrides.hasOwnProperty('rawResponseS3KeyNEQ') ? overrides.rawResponseS3KeyNEQ! : 'alias',
+        rawResponseS3KeyNotIn: overrides && overrides.hasOwnProperty('rawResponseS3KeyNotIn') ? overrides.rawResponseS3KeyNotIn! : ['arto'],
+        rawResponseS3KeyNotNil: overrides && overrides.hasOwnProperty('rawResponseS3KeyNotNil') ? overrides.rawResponseS3KeyNotNil! : false,
+        status: overrides && overrides.hasOwnProperty('status') ? overrides.status! : ('COMPLETED' as ProfileEntryStatus),
+        statusIn: overrides && overrides.hasOwnProperty('statusIn') ? overrides.statusIn! : [('COMPLETED' as ProfileEntryStatus)],
+        statusNEQ: overrides && overrides.hasOwnProperty('statusNEQ') ? overrides.statusNEQ! : ('COMPLETED' as ProfileEntryStatus),
+        statusNotIn: overrides && overrides.hasOwnProperty('statusNotIn') ? overrides.statusNotIn! : [('COMPLETED' as ProfileEntryStatus)],
+        templateJSONS3Key: overrides && overrides.hasOwnProperty('templateJSONS3Key') ? overrides.templateJSONS3Key! : 'adsuesco',
+        templateJSONS3KeyContains: overrides && overrides.hasOwnProperty('templateJSONS3KeyContains') ? overrides.templateJSONS3KeyContains! : 'cupiditate',
+        templateJSONS3KeyContainsFold: overrides && overrides.hasOwnProperty('templateJSONS3KeyContainsFold') ? overrides.templateJSONS3KeyContainsFold! : 'capto',
+        templateJSONS3KeyEqualFold: overrides && overrides.hasOwnProperty('templateJSONS3KeyEqualFold') ? overrides.templateJSONS3KeyEqualFold! : 'cras',
+        templateJSONS3KeyGT: overrides && overrides.hasOwnProperty('templateJSONS3KeyGT') ? overrides.templateJSONS3KeyGT! : 'texo',
+        templateJSONS3KeyGTE: overrides && overrides.hasOwnProperty('templateJSONS3KeyGTE') ? overrides.templateJSONS3KeyGTE! : 'vetus',
+        templateJSONS3KeyHasPrefix: overrides && overrides.hasOwnProperty('templateJSONS3KeyHasPrefix') ? overrides.templateJSONS3KeyHasPrefix! : 'ascit',
+        templateJSONS3KeyHasSuffix: overrides && overrides.hasOwnProperty('templateJSONS3KeyHasSuffix') ? overrides.templateJSONS3KeyHasSuffix! : 'valetudo',
+        templateJSONS3KeyIn: overrides && overrides.hasOwnProperty('templateJSONS3KeyIn') ? overrides.templateJSONS3KeyIn! : ['temeritas'],
+        templateJSONS3KeyIsNil: overrides && overrides.hasOwnProperty('templateJSONS3KeyIsNil') ? overrides.templateJSONS3KeyIsNil! : true,
+        templateJSONS3KeyLT: overrides && overrides.hasOwnProperty('templateJSONS3KeyLT') ? overrides.templateJSONS3KeyLT! : 'aeneus',
+        templateJSONS3KeyLTE: overrides && overrides.hasOwnProperty('templateJSONS3KeyLTE') ? overrides.templateJSONS3KeyLTE! : 'magnam',
+        templateJSONS3KeyNEQ: overrides && overrides.hasOwnProperty('templateJSONS3KeyNEQ') ? overrides.templateJSONS3KeyNEQ! : 'laborum',
+        templateJSONS3KeyNotIn: overrides && overrides.hasOwnProperty('templateJSONS3KeyNotIn') ? overrides.templateJSONS3KeyNotIn! : ['denuncio'],
+        templateJSONS3KeyNotNil: overrides && overrides.hasOwnProperty('templateJSONS3KeyNotNil') ? overrides.templateJSONS3KeyNotNil! : true,
     };
 };
 
@@ -278,6 +436,14 @@ export const mockTodoWhereInput = (overrides?: Partial<TodoWhereInput>): TodoWhe
         userIDNEQ: overrides && overrides.hasOwnProperty('userIDNEQ') ? overrides.userIDNEQ! : 'e6d7faec-16f5-4b37-b9ae-ef43d228c5b8',
         userIDNotIn: overrides && overrides.hasOwnProperty('userIDNotIn') ? overrides.userIDNotIn! : ['7d6d6c51-1fd9-4431-820c-354b1b22e7d1'],
         userIDNotNil: overrides && overrides.hasOwnProperty('userIDNotNil') ? overrides.userIDNotNil! : true,
+    };
+};
+
+export const mockUpdateProfileEntryInput = (overrides?: Partial<UpdateProfileEntryInput>): UpdateProfileEntryInput => {
+    return {
+        gender: overrides && overrides.hasOwnProperty('gender') ? overrides.gender! : 'quia',
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'bbe4f094-fe32-4810-b4f8-dc36018ab355',
+        linkedinUrn: overrides && overrides.hasOwnProperty('linkedinUrn') ? overrides.linkedinUrn! : 'cubo',
     };
 };
 

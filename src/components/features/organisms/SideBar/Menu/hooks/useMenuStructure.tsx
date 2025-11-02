@@ -18,11 +18,18 @@ export const useMenuStructure = () => {
   const menuItems: SidebarMenuItem[] = [
     {
       icon: (type) => renderIcon(type, <DashboardBoldIcon />, <DashboardOutlineIcon />),
-      url: '/dashboard',
+      url: '/',
       label: 'Dashboard',
       id: 'dashboard',
       type: 'itemGroup',
-      children: [],
+      children: [
+        {
+          url: '/profile-entries',
+          label: 'Profile Entries',
+          id: 'profile-entries',
+          type: 'item',
+        },
+      ],
     },
     {
       icon: (type) => renderIcon(type, <PaymentBoldIcon />, <PaymentOutlineIcon />),

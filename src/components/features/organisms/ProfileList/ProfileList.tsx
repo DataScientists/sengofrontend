@@ -11,7 +11,7 @@ interface ProfileListProps {
 }
 
 export const ProfileList: React.FC<ProfileListProps> = ({ data, loading, error }) => {
-  const { currentPage, handleNextPage, handlePrevPage, searchTerm } = useSearchBarContext();
+  const { currentPage, handleNextPage, handlePrevPage } = useSearchBarContext();
 
   // Skeleton loading state
   if (loading) {
@@ -44,7 +44,7 @@ export const ProfileList: React.FC<ProfileListProps> = ({ data, loading, error }
     <Stack gap={4} mt={8} align="stretch">
       {data.edges.map((edge) => 
         edge?.node ? (
-          <Profile key={edge.node.id} profile={edge.node} searchTerm={searchTerm} />
+          <Profile key={edge.node.id} profile={edge.node} />
         ) : null
       )}
       

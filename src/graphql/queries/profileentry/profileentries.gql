@@ -1,0 +1,19 @@
+query ProfileEntries(
+  $after: Cursor
+  $first: Int
+  $before: Cursor
+  $last: Int
+  $where: ProfileEntryWhereInput
+) {
+  profileEntries(after: $after, before: $before, first: $first, last: $last, where: $where) {
+    edges {
+      node {
+        ...ProfileEntry
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+    totalCount
+  }
+}

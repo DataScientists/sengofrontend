@@ -7943,6 +7943,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"date-fns@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "date-fns@npm:4.1.0"
+  checksum: fb681b242cccabed45494468f64282a7d375ea970e0adbcc5dcc92dcb7aba49b2081c2c9739d41bf71ce89ed68dd73bebfe06ca35129490704775d091895710b
+  languageName: node
+  linkType: hard
+
 "debounce@npm:^1.2.0":
   version: 1.2.1
   resolution: "debounce@npm:1.2.1"
@@ -15062,6 +15069,7 @@ __metadata:
     chromatic: ^12.1.0
     cross-fetch: ^4.1.0
     cross-spawn: ^7.0.6
+    date-fns: ^4.1.0
     eslint: ^9.25.0
     eslint-config-prettier: ^10.1.5
     eslint-import-resolver-typescript: ^4.3.4
