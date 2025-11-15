@@ -2,12 +2,10 @@ fragment ProfileEntry on ProfileEntry {
   id
   linkedinUrn
   gender
-        status
-        lastFetchedAt
-        fetchCount
-        profileData
-        createdAt
-        updatedAt
+  status
+  lastFetchedAt
+  fetchCount
+  profileData
+  createdAt
+  updatedAt
 }
-
-

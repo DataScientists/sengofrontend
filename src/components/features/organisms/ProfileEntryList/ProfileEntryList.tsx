@@ -1,17 +1,17 @@
-import { 
-  Box, 
-  Button, 
-  Flex, 
-  HStack, 
-  Skeleton, 
-  Stack, 
-  Text, 
+import {
   Badge,
-  Table
-} from '@chakra-ui/react';
-import React from 'react';
-import type { ProfileEntriesResponse } from '@service/profileEntries/types';
-import { format } from 'date-fns';
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Skeleton,
+  Stack,
+  Table,
+  Text,
+} from "@chakra-ui/react";
+import type { ProfileEntriesResponse } from "@service/profileEntries/types";
+import { format } from "date-fns";
+import React from "react";
 
 interface ProfileEntryListProps {
   data: ProfileEntriesResponse | null;
@@ -20,6 +20,7 @@ interface ProfileEntryListProps {
   onNextPage: () => void;
   onPrevPage: () => void;
   currentPage: number;
+  onFetchProfileEntry: (id: string) => Promise<void>;
 }
 
 export const ProfileEntryList: React.FC<ProfileEntryListProps> = ({
@@ -29,6 +30,7 @@ export const ProfileEntryList: React.FC<ProfileEntryListProps> = ({
   onNextPage,
   onPrevPage,
   currentPage,
+  onFetchProfileEntry,
 }) => {
   if (loading) {
     return (
@@ -50,16 +52,16 @@ export const ProfileEntryList: React.FC<ProfileEntryListProps> = ({
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'COMPLETED':
-        return 'green';
-      case 'PENDING':
-        return 'yellow';
-      case 'FETCHING':
-        return 'blue';
-      case 'FAILED':
-        return 'red';
+      case "COMPLETED":
+        return "green";
+      case "PENDING":
+        return "yellow";
+      case "FETCHING":
+        return "blue";
+      case "FAILED":
+        return "red";
       default:
-        return 'gray';
+        return "gray";
     }
   };
 
@@ -75,24 +77,43 @@ export const ProfileEntryList: React.FC<ProfileEntryListProps> = ({
             <Table.ColumnHeader>Fetch Count</Table.ColumnHeader>
             <Table.ColumnHeader>Last Fetched</Table.ColumnHeader>
             <Table.ColumnHeader>Created At</Table.ColumnHeader>
+            <Table.ColumnHeader>Action</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
         <Table.Body>
           {data.edges.map((edge) => {
             if (!edge || !edge.node) return null;
+
             const entry = edge.node;
-            
+
             return (
               <Table.Row key={entry.id}>
                 <Table.Cell>{entry.id}</Table.Cell>
                 <Table.Cell>{entry.linkedinUrn}</Table.Cell>
                 <Table.Cell>
-                  <Badge colorScheme={getStatusColor(entry.status)}>{entry.status}</Badge>
+                  <Badge colorScheme={getStatusColor(entry.status)}>
+                    {entry.status}
+                  </Badge>
                 </Table.Cell>
-                <Table.Cell>{entry.gender || 'N/A'}</Table.Cell>
+                <Table.Cell>{entry.gender ?? "N/A"}</Table.Cell>
                 <Table.Cell>{entry.fetchCount}</Table.Cell>
-                <Table.Cell>{entry.lastFetchedAt ? format(new Date(entry.lastFetchedAt), 'yyyy-MM-dd HH:mm') : 'Never'}</Table.Cell>
-                <Table.Cell>{format(new Date(entry.createdAt), 'yyyy-MM-dd HH:mm')}</Table.Cell>
+                <Table.Cell>
+                  {entry.lastFetchedAt
+                    ? format(new Date(entry.lastFetchedAt), "yyyy-MM-dd HH:mm")
+                    : "Never"}
+                </Table.Cell>
+                <Table.Cell>
+                  {format(new Date(entry.createdAt), "yyyy-MM-dd HH:mm")}
+                </Table.Cell>
+                <Table.Cell>
+                  {" "}
+                  <Button
+                    onClick={() => void onFetchProfileEntry(entry.id)}
+                    size="sm"
+                  >
+                    Fetch
+                  </Button>
+                </Table.Cell>
               </Table.Row>
             );
           })}

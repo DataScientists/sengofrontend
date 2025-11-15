@@ -91,39 +91,37 @@ export function useCreateProfileEntryMutation(baseOptions?: Apollo.MutationHookO
 export type CreateProfileEntryMutationHookResult = ReturnType<typeof useCreateProfileEntryMutation>;
 export type CreateProfileEntryMutationResult = Apollo.MutationResult<import('../types').CreateProfileEntryMutation>;
 export type CreateProfileEntryMutationOptions = Apollo.BaseMutationOptions<import('../types').CreateProfileEntryMutation, import('../types').CreateProfileEntryMutationVariables>;
-export const UpdateProfileEntryDocument = gql`
-    mutation UpdateProfileEntry($input: UpdateProfileEntryInput!) {
-  updateProfileEntry(input: $input) {
-    ...ProfileEntry
-  }
+export const FetchProfileEntryDocument = gql`
+    mutation FetchProfileEntry($id: ID!) {
+  fetchProfileEntry(id: $id)
 }
-    ${ProfileEntryFragmentDoc}`;
-export type UpdateProfileEntryMutationFn = Apollo.MutationFunction<import('../types').UpdateProfileEntryMutation, import('../types').UpdateProfileEntryMutationVariables>;
+    `;
+export type FetchProfileEntryMutationFn = Apollo.MutationFunction<import('../types').FetchProfileEntryMutation, import('../types').FetchProfileEntryMutationVariables>;
 
 /**
- * __useUpdateProfileEntryMutation__
+ * __useFetchProfileEntryMutation__
  *
- * To run a mutation, you first call `useUpdateProfileEntryMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateProfileEntryMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useFetchProfileEntryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFetchProfileEntryMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [updateProfileEntryMutation, { data, loading, error }] = useUpdateProfileEntryMutation({
+ * const [fetchProfileEntryMutation, { data, loading, error }] = useFetchProfileEntryMutation({
  *   variables: {
- *      input: // value for 'input'
+ *      id: // value for 'id'
  *   },
  * });
  */
-export function useUpdateProfileEntryMutation(baseOptions?: Apollo.MutationHookOptions<import('../types').UpdateProfileEntryMutation, import('../types').UpdateProfileEntryMutationVariables>) {
+export function useFetchProfileEntryMutation(baseOptions?: Apollo.MutationHookOptions<import('../types').FetchProfileEntryMutation, import('../types').FetchProfileEntryMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<import('../types').UpdateProfileEntryMutation, import('../types').UpdateProfileEntryMutationVariables>(UpdateProfileEntryDocument, options);
+        return Apollo.useMutation<import('../types').FetchProfileEntryMutation, import('../types').FetchProfileEntryMutationVariables>(FetchProfileEntryDocument, options);
       }
-export type UpdateProfileEntryMutationHookResult = ReturnType<typeof useUpdateProfileEntryMutation>;
-export type UpdateProfileEntryMutationResult = Apollo.MutationResult<import('../types').UpdateProfileEntryMutation>;
-export type UpdateProfileEntryMutationOptions = Apollo.BaseMutationOptions<import('../types').UpdateProfileEntryMutation, import('../types').UpdateProfileEntryMutationVariables>;
+export type FetchProfileEntryMutationHookResult = ReturnType<typeof useFetchProfileEntryMutation>;
+export type FetchProfileEntryMutationResult = Apollo.MutationResult<import('../types').FetchProfileEntryMutation>;
+export type FetchProfileEntryMutationOptions = Apollo.BaseMutationOptions<import('../types').FetchProfileEntryMutation, import('../types').FetchProfileEntryMutationVariables>;
 export const LoginDocument = gql`
     mutation Login($input: LoginInput!) {
   login(input: $input) {

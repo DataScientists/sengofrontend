@@ -1,5 +1,0 @@
-mutation UpdateProfileEntry($input: UpdateProfileEntryInput!) {
-  updateProfileEntry(input: $input) {
-    ...ProfileEntry
-  }
-}

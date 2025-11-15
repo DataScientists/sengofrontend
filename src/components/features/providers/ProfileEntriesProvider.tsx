@@ -1,20 +1,23 @@
-import { useProfileEntriesService } from '@service/profileEntries';
-import { createProvider } from '@shared/react/createProvider';
-import { useState, useCallback } from 'react';
+import { useProfileEntriesService } from "@service/profileEntries";
+import { createProvider } from "@shared/react/createProvider";
+import { useCallback, useState } from "react";
 
 const useValue = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [status, setStatus] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [status, setStatus] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { 
-    searchProfileEntries, 
-    createProfileEntry, 
-    loading, 
-    createLoading, 
-    error, 
-    createError, 
-    data 
+  const {
+    searchProfileEntries,
+    createProfileEntry,
+    loading,
+    createLoading,
+    error,
+    createError,
+    data,
+    fetchProfileEntry,
+    fetchLoading,
+    fetchError,
   } = useProfileEntriesService();
   const PAGE_SIZE = 10;
 
@@ -26,6 +29,17 @@ const useValue = () => {
     });
   }, [searchProfileEntries, searchTerm, status]);
 
+  const handleFetchProfileEntry = useCallback(
+    async (id) => {
+      console.log(id, "fetch id");
+      await fetchProfileEntry({ id });
+      // Refresh the list after creating a new entry
+      closeModal();
+      await handleSearch();
+    },
+    [createProfileEntry, handleSearch],
+  );
+
   const handleNextPage = useCallback(async () => {
     if (data?.pageInfo.hasNextPage && data?.pageInfo.endCursor) {
       await searchProfileEntries({
@@ -34,7 +48,7 @@ const useValue = () => {
         searchTerm: searchTerm.trim(),
         status: status || undefined,
       });
-      setCurrentPage(prev => prev + 1);
+      setCurrentPage((prev) => prev + 1);
     }
   }, [data, searchProfileEntries, searchTerm, status]);
 
@@ -46,7 +60,7 @@ const useValue = () => {
         searchTerm: searchTerm.trim(),
         status: status || undefined,
       });
-      setCurrentPage(prev => prev - 1);
+      setCurrentPage((prev) => prev - 1);
     }
   }, [data, searchProfileEntries, searchTerm, status]);
 
@@ -54,12 +68,21 @@ const useValue = () => {
     setStatus(newStatus);
   }, []);
 
-  const handleCreateProfileEntry = useCallback(async ({ linkedinUrn, gender }: { linkedinUrn: string; gender: string }) => {
-    await createProfileEntry({ linkedinUrn, gender });
-    // Refresh the list after creating a new entry
-    closeModal()
-    handleSearch();
-  }, [createProfileEntry, handleSearch]);
+  const handleCreateProfileEntry = useCallback(
+    async ({
+      linkedinUrn,
+      gender,
+    }: {
+      linkedinUrn: string;
+      gender: string;
+    }) => {
+      await createProfileEntry({ linkedinUrn, gender });
+      // Refresh the list after creating a new entry
+      closeModal();
+      await handleSearch();
+    },
+    [createProfileEntry, handleSearch],
+  );
 
   const openModal = useCallback(() => {
     setIsModalOpen(true);
@@ -87,9 +110,16 @@ const useValue = () => {
     isModalOpen,
     openModal,
     closeModal,
+    fetchLoading,
+    fetchError,
+    handleFetchProfileEntry,
   };
 };
 
-useValue.__PROVIDER__ = 'src/components/features/providers/ProfileEntriesProvider.tsx';
+useValue.__PROVIDER__ =
+  "src/components/features/providers/ProfileEntriesProvider.tsx";
 
-export const { Provider: ProfileEntriesProvider, useContext: useProfileEntriesContext } = createProvider(useValue);
+export const {
+  Provider: ProfileEntriesProvider,
+  useContext: useProfileEntriesContext,
+} = createProvider(useValue);

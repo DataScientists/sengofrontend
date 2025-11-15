@@ -1,8 +1,23 @@
-import { Box, Container, Heading, Input, Button, Select, HStack, VStack, createListCollection, Flex } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
-import { ProfileEntryList } from '../../organisms/ProfileEntryList';
-import { ProfileEntriesProvider, useProfileEntriesContext } from '../../providers/ProfileEntriesProvider';
-import { CreateProfileEntryModal } from '../../organisms/CreateProfileEntryModal';
+import {
+  Box,
+  Button,
+  Container,
+  createListCollection,
+  Flex,
+  Heading,
+  HStack,
+  Input,
+  Select,
+  VStack,
+} from "@chakra-ui/react";
+import React, { useEffect } from "react";
+
+import { CreateProfileEntryModal } from "../../organisms/CreateProfileEntryModal";
+import { ProfileEntryList } from "../../organisms/ProfileEntryList";
+import {
+  ProfileEntriesProvider,
+  useProfileEntriesContext,
+} from "../../providers/ProfileEntriesProvider";
 
 const ProfileEntriesContent: React.FC = () => {
   const {
@@ -21,12 +36,13 @@ const ProfileEntriesContent: React.FC = () => {
     createLoading,
     isModalOpen,
     openModal,
-    closeModal
+    closeModal,
+    handleFetchProfileEntry,
+    fetchLoading,
   } = useProfileEntriesContext();
 
   useEffect(() => {
     handleSearch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -43,15 +59,18 @@ const ProfileEntriesContent: React.FC = () => {
             <Input
               placeholder="Search by LinkedIn URN"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+              onKeyPress={(e) => e.key === "Enter" && handleSearch()}
             />
             <Select.Root
               collection={statusCollection}
               value={[status]}
-              onValueChange={(details) => handleStatusChange(details.value[0])}
+              onValueChange={(details) => {
+                handleStatusChange(details.value[0]);
+              }}
             >
-             
               <Select.Control>
                 <Select.Trigger>
                   <Select.ValueText placeholder="Filter by status" />
@@ -83,6 +102,7 @@ const ProfileEntriesContent: React.FC = () => {
           onNextPage={handleNextPage}
           onPrevPage={handlePrevPage}
           currentPage={currentPage}
+          onFetchProfileEntry={handleFetchProfileEntry}
         />
       </VStack>
 
@@ -113,5 +133,4 @@ const statusCollection = createListCollection({
     { label: "Fetching", value: "FETCHING" },
     { label: "Failed", value: "FAILED" },
   ],
-})
-
+});

@@ -1,0 +1,3 @@
+mutation FetchProfileEntry($id: ID!) {
+  fetchProfileEntry(id: $id)
+}

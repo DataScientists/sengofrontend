@@ -1,6 +1,6 @@
+import { ProfileEntriesPage } from "@components/features/pages/ProfileEntriesPage";
 import { AppLayout } from "@components/templates";
 import { WindowTitle } from "@components/ui/atoms";
-import { ProfileEntriesPage } from "@components/features/pages/ProfileEntriesPage";
 import errorTracker from "@shared/errorTracking/errorTracker";
 import { SentryRoutes } from "@shared/router";
 import { ErrorBoundary } from "react-error-boundary";
