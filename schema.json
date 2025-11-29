@@ -9460,34 +9460,6 @@
               "defaultValue": null
             },
             {
-              "name": "hasTodos",
-              "description": "todos edge predicates",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "hasTodosWith",
-              "description": null,
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "TodoWhereInput",
-                    "ofType": null
-                  }
-                }
-              },
-              "defaultValue": null
-            },
-            {
               "name": "hasProfileEntry",
               "description": "profile_entry edge predicates",
               "type": {

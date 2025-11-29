@@ -1,7 +1,6 @@
-import bgImage from '@assets/auth-bg.png';
-import { Box } from '@components/ui/atoms';
-import { Flex } from '@components/ui/atoms/Flex';
-import { BrandFooter } from '@components/ui/molecules';
+import bgImage from "@assets/auth-bg.png";
+import { Box } from "@components/ui/atoms";
+import { Flex } from "@components/ui/atoms/Flex";
 
 export const AuthLayout: React.FCWithChildren = (props) => {
   return (
@@ -13,9 +12,9 @@ export const AuthLayout: React.FCWithChildren = (props) => {
       position="relative"
       overflow="hidden"
       css={{
-        '&::before': {
+        "&::before": {
           content: '""',
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           left: 0,
           right: 0,
@@ -23,25 +22,13 @@ export const AuthLayout: React.FCWithChildren = (props) => {
 
           /* now you can pass any CSS value */
           backgroundImage: `url(${bgImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundSize: "cover",
+          backgroundPosition: "center",
 
           zIndex: 0,
         },
       }}
     >
-      <Flex
-        display="flex"
-        flex="1"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-        position="relative"
-        zIndex="1"
-        color="title.dark"
-      >
-        <BrandFooter />
-      </Flex>
       <Flex
         display="flex"
         bg="body.50"
@@ -51,7 +38,15 @@ export const AuthLayout: React.FCWithChildren = (props) => {
         position="relative"
         zIndex="1"
       >
-        <Box width="full" height="full" padding="72px 252px 72px 112px">
+        <Box
+          width="full"
+          height="full"
+          padding="72px 252px 72px 112px"
+          display="flex"
+          flex="1"
+          alignItems="center"
+          justifyContent="center"
+        >
           {props.children}
         </Box>
       </Flex>

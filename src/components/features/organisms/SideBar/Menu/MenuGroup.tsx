@@ -1,7 +1,12 @@
 import { Icon } from '@chakra-ui/react';
-import { Box, Group, List, Stack, Text } from '@components/ui/atoms';
+import { Box } from '@components/ui/atoms/Box';
 import { Flex } from '@components/ui/atoms/Flex';
-import { memo } from 'react';
+import { Group } from '@components/ui/atoms/Group';
+import { List } from '@components/ui/atoms/List';
+import { Stack } from '@components/ui/atoms/Stack';
+import { Text } from '@components/ui/atoms/Text';
+import { memo, useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router';
 
 import { MenuItem } from './MenuItem';
 import { MenuGroupProvider, useMenuGroupContext } from './Provider';
@@ -20,18 +25,67 @@ export const MenuGroup: React.FC<Props> = memo(({ menuItem, isExpanded }) => {
   );
 });
 
-const Component: React.FC<Props> = memo(({isExpanded}) => {
+const Component: React.FC<Props> = memo(({ isExpanded }) => {
   const {
     ref,
     isMenuExpanded,
     isHovering,
     toggleMenu,
     isActive,
-    menuItem: { icon, label, children },
+    menuItem: { icon, label, children, url },
   } = useMenuGroupContext();
-  const shouldHighlight = isActive || isHovering;
+  const navigate = useNavigate();
 
-  const expandMenu = isActive || isMenuExpanded;
+  const handleMenuClick = useCallback(() => {
+    if (url) void navigate(url);
+    else toggleMenu();
+  }, [url, navigate, toggleMenu]);
+
+  const shouldHighlight = useMemo(() => isActive || isHovering, [isActive, isHovering]);
+  const expandMenu = useMemo(() => isActive || isMenuExpanded, [isActive, isMenuExpanded]);
+
+  // Memoize rendering of MenuItem children
+  const renderMenuItems = useCallback(
+    () =>
+      children?.map((child) => (
+        <MenuItem key={child.id} menuItem={child} isExpanded={isExpanded} />
+      )),
+    [children, isExpanded]
+  );
+
+  // Memoize icon render, although it is a very shallow calculation.
+  const renderedIcon = useMemo(() => {
+    if (!icon) return null;
+
+    return (
+      <Icon
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        css={{ width: '16px', height: '16px' }}
+        color={shouldHighlight ? 'title.dark' : 'body.dark'}
+      >
+        {icon(shouldHighlight ? 'active' : 'inactive')}
+      </Icon>
+    );
+  }, [icon, shouldHighlight]);
+
+  // Memoize label render.
+  const renderedLabel = useMemo(() => {
+    if (!isExpanded) return null;
+
+    return (
+      <Text
+        fontSize="14px"
+        lineHeight="normal"
+        color={shouldHighlight ? 'title.dark' : 'body.dark'}
+        textStyle="bodyThree"
+        fontWeight={shouldHighlight ? '600' : '500'}
+      >
+        {label}
+      </Text>
+    );
+  }, [isExpanded, label, shouldHighlight]);
 
   return (
     <Box ref={ref} w="full" height="fit" css={{ minHeight: '44px' }} cursor="button">
@@ -39,7 +93,7 @@ const Component: React.FC<Props> = memo(({isExpanded}) => {
         <Flex
           justifyContent="space-between"
           alignItems="center"
-          onClick={toggleMenu}
+          onClick={handleMenuClick}
           position="relative"
           px="5"
           py="3"
@@ -61,36 +115,13 @@ const Component: React.FC<Props> = memo(({isExpanded}) => {
           }
         >
           <Group display="flex" justifyContent="center" alignItems="center" gap="8px">
-            {icon && (
-              <Icon
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                css={{ width: '16px', height: '16px' }}
-                color={shouldHighlight ? 'title.dark' : 'body.dark'}
-              >
-                {icon(shouldHighlight ? 'active' : 'inactive')}
-              </Icon>
-            )}
-
-            {isExpanded && (
-              <Text
-                fontSize="14px"
-                lineHeight="normal"
-                color={shouldHighlight ? 'title.dark' : 'body.dark'}
-                textStyle="bodyThree"
-                fontWeight={shouldHighlight ? '600' : '500'}
-              >
-                {label}
-              </Text>
-            )}
+            {renderedIcon}
+            {renderedLabel}
           </Group>
         </Flex>
         {expandMenu && (
           <Stack pl="10" gapY="3">
-            {children?.map((menuItem) => (
-              <MenuItem key={menuItem.id} menuItem={menuItem} isExpanded={isExpanded} />
-            ))}
+            {renderMenuItems()}
           </Stack>
         )}
       </List>

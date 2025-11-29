@@ -1,5 +1,7 @@
-import { Flex, List, Stack, Text } from '@components/ui/atoms';
-import { Divider } from '@components/ui/molecules';
+import { Box } from '@components/ui/atoms/Box';
+import { List } from '@components/ui/atoms/List';
+import { Stack } from '@components/ui/atoms/Stack';
+import { Text } from '@components/ui/atoms/Text';
 import { memo } from 'react';
 
 import { useSystemMenuStructure } from './hooks';
@@ -15,25 +17,19 @@ export const SystemMenu: React.FC<MenuProps> = memo(({ isExpanded }) => {
   return (
     <Stack display="flex" flexDirection="column" alignItems="flex-start" gap="24px">
       {isExpanded && (
-        <Flex
-          display="flex"
-          width="204px"
-          padding="0 24px"
-          flexDirection="column"
-          alignItems="flex-start"
-          gap="4px"
-        >
+        <Box w="full" padding="0 24px">
           <Text
             fontSize="12px"
             fontWeight="500"
             textTransform="uppercase"
             color="body.dark"
-            opacity="0.7"
+            borderBottom="1px solid"
+            borderColor="body.550/10"
+            pb={1}
           >
             System
           </Text>
-          <Divider position="absolute" left="0" right="0" width="full" height="1px" opacity="0.7" />
-        </Flex>
+        </Box>
       )}
       <List as="ol" display="grid" gap="0" data-test-id="system-menu-list">
         {menustructure.map((menuItem) => (

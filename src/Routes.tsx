@@ -1,14 +1,36 @@
-import { ProfileEntriesPage } from "@components/features/pages/ProfileEntriesPage";
+import { Spinner } from "@chakra-ui/react";
+import { AuthRouter } from "@components/modules/auth/index";
+import { ProfilesRoute } from "@components/modules/profiles";
 import { AppLayout } from "@components/templates";
 import { WindowTitle } from "@components/ui/atoms";
+import { useAuthContext } from "@shared/auth";
 import errorTracker from "@shared/errorTracking/errorTracker";
 import { SentryRoutes } from "@shared/router";
+import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Route } from "react-router-dom";
 
-import { App } from "./App";
+const LoadingSpinner = () => (
+  <div
+    style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      position: "fixed",
+      inset: 0,
+      width: "100vw",
+      height: "100vh",
+      background: "white",
+      zIndex: 2999,
+    }}
+  >
+    <Spinner color="purple.400" size="lg" />
+  </div>
+);
 
 export const Routes: React.FCWithChildren = ({ children }) => {
+  const { authenticated, authenticating } = useAuthContext();
+
   return (
     <>
       <WindowTitle title="Sheng" />
@@ -17,14 +39,27 @@ export const Routes: React.FCWithChildren = ({ children }) => {
         onError={errorTracker.captureException}
         fallbackRender={() => <h1>Somethign went wrong</h1>}
       >
-        {" "}
-        <AppLayout>
+        <Suspense fallback={<LoadingSpinner />}>
           <SentryRoutes>
-            <Route path="/" Component={App} />
-            <Route path="/profile-entries" Component={ProfileEntriesPage} />
-            {children}
+            {authenticated ? (
+              <Route
+                path="*"
+                element={
+                  <AppLayout>
+                    <SentryRoutes>
+                      {ProfilesRoute}
+                      {children ?? null}
+                    </SentryRoutes>
+                  </AppLayout>
+                }
+              />
+            ) : authenticating ? (
+              <Route path="*" element={<LoadingSpinner />} />
+            ) : (
+              <Route path="*" element={<AuthRouter />} />
+            )}
           </SentryRoutes>
-        </AppLayout>
+        </Suspense>
       </ErrorBoundary>
     </>
   );

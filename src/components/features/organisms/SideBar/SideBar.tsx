@@ -1,52 +1,79 @@
-import { Stack } from '@components/ui/atoms';
 import { Flex } from '@components/ui/atoms/Flex';
-import { BrandLogo } from '@components/ui/molecules';
+import { Stack } from '@components/ui/atoms/Stack';
+import { BrandLogo } from '@components/ui/molecules/BrandLogo';
+import { useBreakpointValue } from '@shared/chakra/chakra';
+import { memo, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router';
 
 import { Footer } from './Footer';
+import { HamburgerHeaderMenu } from './HamburgerHeaderMenu';
 import { Header } from './Header';
 import { useSideBar } from './hooks';
 import { Menu, SystemMenu } from './Menu';
 import { OnlineUser } from './OnlineUser';
 
-export const SideBar: React.FC = () => {
+export const SideBar: React.FC = memo(() => {
   const navigate = useNavigate();
 
-  const handleLogoClick = () => {
+  const handleLogoClick = useCallback(() => {
     void navigate('/');
-  };
+  }, [navigate]);
 
   const { isExpanded } = useSideBar();
+  const isMobile = useBreakpointValue({ base: true, md: false });
 
-  return (
-    <Flex
-      as="aside"
-      flexDir="column"
-      css={{
+  // Memoize styles based on isExpanded
+  const sidebarStyles = useMemo(
+    () => ({
+      as: 'aside' as const,
+      flexDir: 'column' as const,
+      alignSelf: 'stretch' as const,
+      css: {
         width: isExpanded ? '204px' : '54px',
-        height: 'full',
         flexShrink: '0',
-      }}
-      bg={'body.50'}
-      boxShadow="2px 0 10px 0 rgba(236, 238, 241, 0.70)"
-      position="relative"
-    >
+      },
+      bg: 'body.50' as const,
+      boxShadow: '2px 0 10px 0 rgba(236, 238, 241, 0.70)',
+      position: 'sticky' as const,
+      top: 0,
+    }),
+    [isExpanded]
+  );
+
+  const stackStyles = useMemo(
+    () => ({
+      display: 'inline-flex' as const,
+      flexDirection: 'column' as const,
+      justifyContent: 'space-between' as const,
+      alignItems: 'flex-start' as const,
+      gap: '12px' as const,
+      height: 'calc(100vh - 100px)' as const,
+      pb: '3' as const,
+      overflowY: 'auto' as const,
+      flexShrink: '0' as const,
+      '::-webkit-scrollbar': { display: 'none' },
+      scrollbarWidth: 'none',
+      msOverflowStyle: 'none',
+    }),
+    [isExpanded]
+  );
+
+  // Render mobile hamburger menu for tablet and below
+  if (isMobile) {
+    return <HamburgerHeaderMenu />;
+  }
+
+  // Render desktop sidebar
+  return (
+    <Flex {...sidebarStyles}>
       <Stack display="inline-flex" gap="8px" mt="28px" alignItems="center">
         <BrandLogo onClick={handleLogoClick} isExpanded={isExpanded} />
       </Stack>
 
       <Header />
-      <Stack
-        display="inline-flex"
-        flexDirection="column"
-        justifyContent="space-between"
-        alignItems="flex-start"
-        height="880px"
-        flexShrink="0"
-      >
-        <Flex display="flex" flexDirection="column" alignItems="center" gap="48px">
+      <Stack {...stackStyles}>
+        <Flex display="flex" flexDirection="column" gap="48px" w="full">
           <OnlineUser isExpanded={isExpanded} />
-
           <Menu isExpanded={isExpanded} />
           <SystemMenu isExpanded={isExpanded} />
         </Flex>
@@ -54,4 +81,6 @@ export const SideBar: React.FC = () => {
       </Stack>
     </Flex>
   );
-};
+});
+
+SideBar.displayName = 'SideBar';

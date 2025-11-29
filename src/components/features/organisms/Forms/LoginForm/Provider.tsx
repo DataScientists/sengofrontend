@@ -1,11 +1,11 @@
-import { createProvider } from '@shared/react/createProvider';
-import { extractErrorMessage } from '@shared/utils';
-import { useLogin } from '@store/me/hooks';
-import { useFormik } from 'formik';
-import { useCallback, useState } from 'react';
-import type { InputType } from 'storybook/internal/csf';
+import { createProvider } from "@shared/react/createProvider";
+import { extractErrorMessage } from "@shared/utils";
+import { useLogin } from "@store/me/hooks";
+import { useFormik } from "formik";
+import { useCallback, useState } from "react";
+import type { InputType } from "storybook/internal/csf";
 
-import { initialValues, loginSchema } from './login.schema';
+import { initialValues, loginSchema } from "./login.schema";
 
 type ContextProps = {
   generalError: string;
@@ -20,12 +20,12 @@ type ContextProps = {
 
 const useValue = (): ContextProps => {
   const { login, loginLoading } = useLogin();
-  const [generalError, setGeneralError] = useState<string>('');
+  const [generalError, setGeneralError] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [rememberMe, setRememberMe] = useState<boolean>(false);
 
   const handleSubmit = async (values: InputType) => {
-    setGeneralError('');
+    setGeneralError("");
 
     try {
       // run the login and surface any field/general errors
@@ -44,7 +44,7 @@ const useValue = (): ContextProps => {
   };
 
   const resetGeneralError = () => {
-    setGeneralError('');
+    setGeneralError("");
   };
 
   const toggleShowPassword = useCallback(() => {
@@ -74,6 +74,6 @@ const useValue = (): ContextProps => {
   };
 };
 
-useValue.__PROVIDER__ = 'src/components/features/LoginForm/provider.tsx';
+useValue.__PROVIDER__ = "src/components/features/LoginForm/provider.tsx";
 export const { Provider: LoginFormProvider, useContext: useLoginFormContext } =
   createProvider(useValue);

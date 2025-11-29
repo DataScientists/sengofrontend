@@ -711,8 +711,6 @@ export const mockProfileWhereInput = (overrides?: Partial<ProfileWhereInput>): P
         firstNameNotNil: overrides && overrides.hasOwnProperty('firstNameNotNil') ? overrides.firstNameNotNil! : false,
         hasProfileEntry: overrides && overrides.hasOwnProperty('hasProfileEntry') ? overrides.hasProfileEntry! : false,
         hasProfileEntryWith: overrides && overrides.hasOwnProperty('hasProfileEntryWith') ? overrides.hasProfileEntryWith! : [mockProfileEntryWhereInput()],
-        hasTodos: overrides && overrides.hasOwnProperty('hasTodos') ? overrides.hasTodos! : false,
-        hasTodosWith: overrides && overrides.hasOwnProperty('hasTodosWith') ? overrides.hasTodosWith! : [mockTodoWhereInput()],
         headline: overrides && overrides.hasOwnProperty('headline') ? overrides.headline! : 'claustrum',
         headlineContains: overrides && overrides.hasOwnProperty('headlineContains') ? overrides.headlineContains! : 'denique',
         headlineContainsFold: overrides && overrides.hasOwnProperty('headlineContainsFold') ? overrides.headlineContainsFold! : 'ex',

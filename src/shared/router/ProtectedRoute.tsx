@@ -1,15 +1,25 @@
-import { useMe } from '@store/me/hooks';
-import { Route, type RouterProps } from 'react-router-dom';
+import { useAuthContext } from '@shared/auth';
+import { Navigate } from 'react-router-dom';
 
-export const ProtectedRoute: React.FC<RouterProps> = (props) => {
-  const { me } = useMe();
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+}
 
-  // Prevents race condition
-  if (me === undefined) {
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+  const { authenticated, authenticating } = useAuthContext();
+
+  // Show nothing while checking authentication status
+  if (authenticating) {
     return null;
   }
 
-  return <Route {...props} />;
+  // Redirect to login if not authenticated
+  if (!authenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <>{children}</>;
 };
-ProtectedRoute.displayName = 'Route';
+
+ProtectedRoute.displayName = 'ProtectedRoute';
 export default ProtectedRoute;

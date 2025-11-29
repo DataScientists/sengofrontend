@@ -1,4 +1,6 @@
-import { Box, ListItem, Text } from '@components/ui/atoms';
+import { Box } from '@components/ui/atoms/Box';
+import { ListItem } from '@components/ui/atoms/ListItem';
+import { Text } from '@components/ui/atoms/Text';
 import { useHover } from '@shared/hooks';
 import { Link } from 'react-router';
 

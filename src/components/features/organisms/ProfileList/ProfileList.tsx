@@ -1,24 +1,46 @@
-import { Box, Button, Flex, HStack, Skeleton, Stack, Text } from '@chakra-ui/react';
-import React from 'react';
-import { Profile } from '../Profile';
-import type { ProfilesResponse } from '@service/profiles/types';
-import { useSearchBarContext } from '../SearchBar/SearchBarProvider';
+import {
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Skeleton,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+import type { ProfilesResponse } from "@service/profiles/types";
+import React from "react";
+
+import { Profile } from "../Profile";
 
 interface ProfileListProps {
   data: ProfilesResponse | null;
   loading: boolean;
   error: Error | null;
+  currentPage: number;
+  handleNextPage: () => void;
+  handlePrevPage: () => void;
 }
 
-export const ProfileList: React.FC<ProfileListProps> = ({ data, loading, error }) => {
-  const { currentPage, handleNextPage, handlePrevPage } = useSearchBarContext();
-
+export const ProfileList: React.FC<ProfileListProps> = ({
+  data,
+  loading,
+  error,
+  currentPage,
+  handlePrevPage,
+  handleNextPage,
+}) => {
   // Skeleton loading state
   if (loading) {
     return (
       <Stack gap={4} mt={8} align="stretch">
         {[...Array(5)].map((_, index) => (
-          <Box key={index} p={4} borderWidth="1px" borderRadius="md" shadow="sm">
+          <Box
+            key={index}
+            p={4}
+            borderWidth="1px"
+            borderRadius="md"
+            shadow="sm"
+          >
             <Skeleton height="24px" width="70%" mb={2} />
             <Skeleton height="20px" width="50%" mb={2} />
             <Skeleton height="16px" width="30%" />
@@ -37,28 +59,30 @@ export const ProfileList: React.FC<ProfileListProps> = ({ data, loading, error }
   }
 
   if (!data || !data.edges || data.edges.length === 0) {
-    return <Text mt={8} textAlign="center">No results found</Text>;
+    return (
+      <Text mt={8} textAlign="center">
+        No results found
+      </Text>
+    );
   }
 
   return (
     <Stack gap={4} mt={8} align="stretch">
-      {data.edges.map((edge) => 
-        edge?.node ? (
-          <Profile key={edge.node.id} profile={edge.node} />
-        ) : null
+      {data.edges.map((edge) =>
+        edge?.node ? <Profile key={edge.node.id} profile={edge.node} /> : null,
       )}
-      
+
       <Flex justify="space-between" mt={4}>
         <HStack>
-          <Button 
-            onClick={handlePrevPage} 
+          <Button
+            onClick={handlePrevPage}
             disabled={!data.pageInfo.hasPreviousPage || loading}
           >
             Previous
           </Button>
           <Text>Page {currentPage}</Text>
-          <Button 
-            onClick={handleNextPage} 
+          <Button
+            onClick={handleNextPage}
             disabled={!data.pageInfo.hasNextPage || loading}
           >
             Next
@@ -70,4 +94,4 @@ export const ProfileList: React.FC<ProfileListProps> = ({ data, loading, error }
   );
 };
 
-ProfileList.displayName = 'ProfileList';
+ProfileList.displayName = "ProfileList";

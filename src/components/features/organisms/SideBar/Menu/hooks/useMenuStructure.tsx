@@ -1,91 +1,41 @@
-import { Icon } from '@chakra-ui/react';
-import {
-  DashboardBoldIcon,
-  DashboardOutlineIcon,
-  DisputeBoldIcon,
-  DisputeOutlineIcon,
-  PaymentBoldIcon,
-  PaymentOutlineIcon,
-  RefundBoldIcon,
-  RefundOutlineIcon,
-  ReportBoldIcon,
-  ReportOutlineIcon,
-} from '@components/ui/atoms';
+import { Icon } from "@chakra-ui/react";
+import { Category, Chart, Messages2, MoneyRecive } from "iconsax-reactjs";
 
-import type { SidebarMenuItem } from '../types';
+import type { SidebarMenuItem } from "../types";
 
 export const useMenuStructure = () => {
   const menuItems: SidebarMenuItem[] = [
     {
-      icon: (type) => renderIcon(type, <DashboardBoldIcon />, <DashboardOutlineIcon />),
-      url: '/',
-      label: 'Dashboard',
-      id: 'dashboard',
-      type: 'itemGroup',
-      children: [
-        {
-          url: '/profile-entries',
-          label: 'Profile Entries',
-          id: 'profile-entries',
-          type: 'item',
-        },
-      ],
+      icon: (type) => renderIcon(type, Category),
+      url: "/dashboard",
+      label: "Dashboard",
+      id: "dashboard",
+      type: "itemGroup",
+      children: [],
     },
+
     {
-      icon: (type) => renderIcon(type, <PaymentBoldIcon />, <PaymentOutlineIcon />),
-      url: '/payments',
-      label: 'Payments',
-      id: 'payments',
-      type: 'itemGroup',
-      children: [
-        {
-          url: '/payments/pay-links',
-          label: 'Pay Links',
-          id: 'pay-links',
-          type: 'item',
-        },
-        {
-          url: '/payments/subscriptions',
-          label: 'Subscriptions',
-          id: 'subscriptions',
-          type: 'item',
-        },
-        {
-          url: '/payments/checkouts',
-          label: 'Checkouts',
-          id: 'checkouts',
-          type: 'item',
-        },
-        {
-          url: '/payments/mobile-app',
-          label: 'Mobile App',
-          id: 'mobile-app',
-          type: 'item',
-        },
-      ],
-    },
-    {
-      icon: (type) => renderIcon(type, <RefundBoldIcon />, <RefundOutlineIcon />),
-      url: '/refunds',
-      label: 'Refunds',
-      id: 'refunds',
-      type: 'itemGroup',
+      icon: (type) => renderIcon(type, MoneyRecive),
+      url: "/profiles",
+      label: "profiles",
+      id: "profiles",
+      type: "itemGroup",
       children: [],
     },
     {
-      icon: (type) => renderIcon(type, <DisputeBoldIcon />, <DisputeOutlineIcon />),
-      url: '/disputes',
-      label: 'Disputes',
-      id: 'disputes',
-      type: 'itemGroup',
+      icon: (type) => renderIcon(type, Messages2),
+      url: "/profile-entries",
+      label: "Profile Entries",
+      id: "profile-entries",
+      type: "itemGroup",
       children: [],
     },
     {
-      icon: (type) => renderIcon(type, <ReportBoldIcon />, <ReportOutlineIcon />),
-      url: '/reports',
-      label: 'Reports',
-      id: 'reports',
-      type: 'itemGroup',
+      icon: (type) => renderIcon(type, Chart),
+      url: "/reports",
+      label: "Reports",
+      id: "reports",
+      type: "itemGroup",
       children: [],
     },
   ];
@@ -94,13 +44,18 @@ export const useMenuStructure = () => {
 };
 
 function renderIcon(
-  type: 'active' | 'inactive',
-  boldIcon: React.ReactNode,
-  outlineIcon: React.ReactNode
+  type: "active" | "inactive",
+  IconComponent: React.ComponentType<{
+    size?: string | number;
+    variant?: "Bold" | "Linear" | "Outline" | "Broken" | "Bulk" | "TwoTone";
+    color?: string;
+  }>,
 ) {
+  const variant = type === "active" ? "Bold" : "Linear";
+
   return (
     <Icon color="body.dark" size="sm">
-      {type === 'active' ? boldIcon : outlineIcon}
+      <IconComponent size="20" variant={variant} />
     </Icon>
   );
 }

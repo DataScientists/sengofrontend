@@ -1,6 +1,7 @@
 import { useHover } from '@shared/hooks';
 import { createProvider } from '@shared/react/createProvider';
 import { useCallback, useState } from 'react';
+import { useLocation } from 'react-router';
 
 import type { SidebarMenuItem } from './types';
 import { isMenuActive } from './utils';
@@ -19,12 +20,18 @@ type Props = {
 
 const useValue = (props: Props): ContextProps => {
   const { menuItem } = props;
+  const location = useLocation();
   const { ref, isHovering } = useHover<HTMLDivElement>();
+
   const hasSubmenuActive = menuItem?.children?.some((item) =>
     isMenuActive(location.pathname, item)
   );
+
   const [isMenuExpanded, setIsExpanded] = useState<boolean>(!!hasSubmenuActive);
-  const isActive = isMenuActive(location.pathname, menuItem) && !hasSubmenuActive;
+
+  const isActive =
+    (!!menuItem.url && isMenuActive(location.pathname, menuItem)) || !!hasSubmenuActive;
+
   const toggleMenu = useCallback(() => {
     setIsExpanded((prev) => !prev);
   }, []);

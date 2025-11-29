@@ -852,9 +852,6 @@ export type __SHOULD_NOT_USE__ProfileWhereInput = {
   /** profile_entry edge predicates */
   hasProfileEntry?: InputMaybe<Scalars['Boolean']['input']>;
   hasProfileEntryWith?: InputMaybe<Array<__SHOULD_NOT_USE__ProfileEntryWhereInput>>;
-  /** todos edge predicates */
-  hasTodos?: InputMaybe<Scalars['Boolean']['input']>;
-  hasTodosWith?: InputMaybe<Array<__SHOULD_NOT_USE__TodoWhereInput>>;
   /** headline field predicates */
   headline?: InputMaybe<Scalars['String']['input']>;
   headlineContains?: InputMaybe<Scalars['String']['input']>;

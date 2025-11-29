@@ -1,8 +1,8 @@
-import { useAuthService } from '@service/auth';
-import { useAuthContext } from '@shared/auth';
-import { useCallback } from 'react';
+import { useAuthService } from "@service/auth";
+import { useAuthContext } from "@shared/auth";
+import { useCallback } from "react";
 
-import { useMeResponse } from './useMeResponse';
+import { useMeResponse } from "./useMeResponse";
 
 type LoginResponse = {
   errors?: Array<{ code: string; message: string }>;
@@ -15,28 +15,24 @@ export function useLogin() {
   const { setTokens } = useAuthContext();
   const login = useCallback(
     async (email: string, password: string): Promise<LoginResponse> => {
-      const { accessToken, refreshToken, me, errors } = await doLogin(email, password);
+      const { accessToken, refreshToken, user } = await doLogin(
+        email,
+        password,
+      );
 
-      if (errors && errors?.length > 0) {
-        return {
-          errors,
-          success: false,
-        };
-      }
-
-      if (!accessToken || !refreshToken || !me) {
+      if (!accessToken || !refreshToken || !user) {
         return {
           success: false,
           errors: [
             {
-              code: 'INVALID_PAYLOAD',
-              message: 'Authentication succeeded but returned incomplete data.',
+              code: "INVALID_PAYLOAD",
+              message: "Authentication succeeded but returned incomplete data.",
             },
           ],
         };
       }
 
-      setMeFromResponse(me);
+      setMeFromResponse(user);
 
       await setTokens(accessToken, refreshToken);
 
@@ -44,7 +40,7 @@ export function useLogin() {
         success: true,
       };
     },
-    [doLogin, setMeFromResponse]
+    [doLogin, setMeFromResponse],
   );
 
   return { login, loginLoading };

@@ -3,8 +3,6 @@ import { useProfileTitleGroupService } from "@service/profiles";
 import React, { useCallback, useState } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
-import { useSearchBarContext } from "../SearchBar/SearchBarProvider";
-
 const COLORS = [
   "#0088FE",
   "#00C49F",
@@ -18,8 +16,11 @@ const COLORS = [
   "#A78BFA",
 ];
 
-export const ProfileTitleChart: React.FC = () => {
-  const { searchTerm } = useSearchBarContext();
+type Props = {
+  searchTerm: string;
+};
+
+export const ProfileTitleChart: React.FC<Props> = ({ searchTerm }) => {
   const { fetchProfileTitleGroup, data, loading, error } =
     useProfileTitleGroupService();
   const [minCount, setMinCount] = useState<number>(1);

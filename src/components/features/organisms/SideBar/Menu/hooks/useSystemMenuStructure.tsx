@@ -1,39 +1,16 @@
-import { Icon } from '@chakra-ui/react';
-import {
-  DeveloperBoldIcon,
-  DeveloperOutlineIcon,
-  MerchantBoldIcon,
-  MerchantOutlineIcon,
-  UserBoldIcon,
-  UserOutlineIcon,
-} from '@components/ui/atoms';
+import { Icon } from "@chakra-ui/react";
+import { Profile2User } from "iconsax-reactjs";
 
-import type { SidebarMenuItem } from '../types';
+import type { SidebarMenuItem } from "../types";
 
 export const useSystemMenuStructure = (): SidebarMenuItem[] => {
   const menuItems: SidebarMenuItem[] = [
     {
-      icon: (type) => renderIcon(type, <UserBoldIcon />, <UserOutlineIcon />),
-      label: 'Users',
-      id: 'users',
-      url: '/system/users',
-      type: 'itemGroup',
-      children: [],
-    },
-    {
-      icon: (type) => renderIcon(type, <MerchantBoldIcon />, <MerchantOutlineIcon />),
-      label: 'Merchants',
-      id: 'merchants',
-      url: '/system/merchants',
-      type: 'itemGroup',
-      children: [],
-    },
-    {
-      icon: (type) => renderIcon(type, <DeveloperBoldIcon />, <DeveloperOutlineIcon />),
-      label: 'Developers',
-      id: 'developers',
-      url: '/system/developers',
-      type: 'itemGroup',
+      icon: (type) => renderIcon(type, Profile2User),
+      label: "Users",
+      id: "users",
+      url: "/system/users",
+      type: "itemGroup",
       children: [],
     },
   ];
@@ -42,13 +19,18 @@ export const useSystemMenuStructure = (): SidebarMenuItem[] => {
 };
 
 function renderIcon(
-  type: 'active' | 'inactive',
-  boldIcon: React.ReactNode,
-  outlineIcon: React.ReactNode
+  type: "active" | "inactive",
+  IconComponent: React.ComponentType<{
+    size?: string | number;
+    variant?: "Bold" | "Linear" | "Outline" | "Broken" | "Bulk" | "TwoTone";
+    color?: string;
+  }>,
 ) {
+  const variant = type === "active" ? "Bold" : "Linear";
+
   return (
     <Icon color="body.dark" size="sm">
-      {type === 'active' ? boldIcon : outlineIcon}
+      <IconComponent size="20" variant={variant} />
     </Icon>
   );
 }

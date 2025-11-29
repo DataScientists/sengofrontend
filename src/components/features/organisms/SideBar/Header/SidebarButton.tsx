@@ -1,6 +1,6 @@
-import { Icon } from '@chakra-ui/react';
-import { ChevronLeftIcon, IconButton } from '@components/ui/atoms';
+import { IconButton } from '@components/ui/atoms/IconButton';
 import { useHover } from '@shared/hooks';
+import { ArrowCircleLeft, ArrowCircleRight } from 'iconsax-reactjs';
 
 import { useSideBar } from '../hooks';
 
@@ -14,17 +14,20 @@ export const SideBarButton: React.FC = () => {
       cursor="button"
       onClick={toggleSideBar}
       bg="transparent"
+      h="24px"
+      minW="24px"
       css={{
-        p: '6px',
         transition: 'right 0.3s',
       }}
       _hover={{
         bg: 'transparent',
       }}
     >
-      <Icon css={{ height: '24px', width: '24px', flexShrink: '0' }}>
-        <ChevronLeftIcon />
-      </Icon>
+      {useSideBar().isExpanded ? (
+        <ArrowCircleLeft size={24} color="#6E6789" variant="Bold" />
+      ) : (
+        <ArrowCircleRight size={24} color="#6E6789" variant="Bold" />
+      )}
     </IconButton>
   );
 };

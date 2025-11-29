@@ -1,4 +1,5 @@
 import bgImage from "@assets/app-bg.png";
+import { SideBar } from "@components/features/organisms";
 import { Container } from "@components/ui/atoms";
 import { Flex } from "@components/ui/atoms/Flex";
 
@@ -19,6 +20,7 @@ export const AppLayout: React.FCWithChildren = (props) => {
       }}
       overflow="scroll"
     >
+      <SideBar />
       <Container
         display="flex"
         flexDir="column"

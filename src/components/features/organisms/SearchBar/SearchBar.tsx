@@ -1,18 +1,20 @@
-import { Box, Button, Flex, Input } from '@chakra-ui/react';
-import React from 'react';
-import type { KeyboardEvent } from 'react';
+import { Box, Button, Flex, Input } from "@chakra-ui/react";
+import type { KeyboardEvent } from "react";
+import React from "react";
 
-import { useSearchBarContext } from './SearchBarProvider';
+type Props = {
+  searchTerm?: string;
+  setSearchTerm: (searchterm: string) => void;
+  handleSearch: () => void;
+};
 
-export const SearchBar: React.FC = () => {
-  const {
-    searchTerm,
-    setSearchTerm,
-    handleSearch,
-  } = useSearchBarContext();
-
+export const SearchBar: React.FC<Props> = ({
+  searchTerm,
+  setSearchTerm,
+  handleSearch,
+}) => {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSearch();
     }
   };
@@ -23,17 +25,15 @@ export const SearchBar: React.FC = () => {
         <Input
           placeholder="Search profiles..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+          }}
           onKeyDown={handleKeyDown}
           size="lg"
           borderRadius="md"
           mr={2}
         />
-        <Button
-          onClick={handleSearch}
-          colorScheme="blue"
-          size="lg"
-        >
+        <Button onClick={handleSearch} colorScheme="blue" size="lg">
           Search
         </Button>
       </Flex>

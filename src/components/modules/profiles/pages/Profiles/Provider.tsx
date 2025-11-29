@@ -1,9 +1,9 @@
-import { useProfilesService } from '@service/profiles';
-import { createProvider } from '@shared/react/createProvider';
-import { useState, useCallback } from 'react';
+import { useProfilesService } from "@service/profiles";
+import { createProvider } from "@shared/react/createProvider";
+import { useCallback, useState } from "react";
 
 const useValue = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const { searchProfiles, loading, error, data } = useProfilesService();
   const PAGE_SIZE = 10;
@@ -22,7 +22,7 @@ const useValue = () => {
         after: data.pageInfo.endCursor,
         searchTerm: searchTerm.trim(),
       });
-      setCurrentPage(prev => prev + 1);
+      setCurrentPage((prev) => prev + 1);
     }
   }, [data, searchProfiles, searchTerm]);
 
@@ -33,7 +33,7 @@ const useValue = () => {
         before: data.pageInfo.startCursor,
         searchTerm: searchTerm.trim(),
       });
-      setCurrentPage(prev => prev - 1);
+      setCurrentPage((prev) => prev - 1);
     }
   }, [data, searchProfiles, searchTerm]);
 
@@ -50,6 +50,8 @@ const useValue = () => {
   };
 };
 
-useValue.__PROVIDER__ = 'src/components/features/organisms/SearchBar/SearchBarProvider.tsx';
+useValue.__PROVIDER__ =
+  "src/components/modules/profiles/pages/Profiles/Provider.tsx";
 
-export const { Provider: SearchBarProvider, useContext: useSearchBarContext } = createProvider(useValue);
+export const { Provider: ProfilesProvider, useContext: useProfilesContext } =
+  createProvider(useValue);
