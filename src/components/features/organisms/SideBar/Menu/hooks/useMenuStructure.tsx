@@ -38,6 +38,14 @@ export const useMenuStructure = () => {
       type: "itemGroup",
       children: [],
     },
+    {
+      icon: (type) => renderIcon(type, Chart), // Using Chart icon for now, can be changed
+      url: "/job-history",
+      label: "Job History",
+      id: "job-history",
+      type: "itemGroup",
+      children: [],
+    },
   ];
 
   return menuItems;

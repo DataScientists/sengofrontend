@@ -1,0 +1,12 @@
+fragment APIQuotaTracker on APIQuotaTracker {
+  id
+  month
+  year
+  callCount
+  quotaLimit
+  quotaExceeded
+  overrideEnabled
+  notificationSent
+  lastCallAt
+  createdAt
+}

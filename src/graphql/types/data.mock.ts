@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-redeclare @typescript-eslint/no-use-before-define,@typescript-eslint/no-unused-vars,no-prototype-builtins */
-import type { ApiQuotaTracker, ApiQuotaTrackerWhereInput, AuthPayload, CreateProfileEntryInput, CreateProfileInput, CreateTodoInput, CreateUserInput, CronJobConfig, CronJobConfigWhereInput, DashboardOverview, JobExecutionHistory, JobExecutionHistoryWhereInput, JobStats, LoginInput, Node, PageInfo, Profile, ProfileConnection, ProfileEdge, ProfileEntry, ProfileEntryConnection, ProfileEntryEdge, ProfileEntryStats, ProfileEntryWhereInput, ProfileTitleGroup, ProfileWhereInput, RefreshTokenPayload, Todo, TodoConnection, TodoEdge, TodoWhereInput, UpdateCronJobConfigInput, UpdateProfileEntryInput, UpdateProfileInput, UpdateTodoInput, UpdateUserInput, User, UserConnection, UserEdge, UserWhereInput, CronJobType, JobExecutionStatus, ProfileEntryStatus, TodoStatus } from './index.mock';
+import type { ApiQuotaTracker, ApiQuotaTrackerWhereInput, AuthPayload, CreateProfileEntryInput, CreateProfileInput, CreateTodoInput, CreateUserInput, CronJobConfig, CronJobConfigWhereInput, DashboardOverview, JobExecutionHistory, JobExecutionHistoryConnection, JobExecutionHistoryEdge, JobExecutionHistoryWhereInput, JobStats, LoginInput, Node, PageInfo, Profile, ProfileConnection, ProfileEdge, ProfileEntry, ProfileEntryConnection, ProfileEntryEdge, ProfileEntryStats, ProfileEntryWhereInput, ProfileTitleGroup, ProfileWhereInput, RefreshTokenPayload, Todo, TodoConnection, TodoEdge, TodoWhereInput, UpdateCronJobConfigInput, UpdateProfileEntryInput, UpdateProfileInput, UpdateTodoInput, UpdateUserInput, User, UserConnection, UserEdge, UserWhereInput, CronJobType, JobExecutionStatus, ProfileEntryStatus, TodoStatus } from './index.mock';
 
 export const mockApiQuotaTracker = (overrides?: Partial<ApiQuotaTracker>): { __typename: 'APIQuotaTracker' } & ApiQuotaTracker => {
     return {
@@ -279,6 +279,23 @@ export const mockJobExecutionHistory = (overrides?: Partial<JobExecutionHistory>
     };
 };
 
+export const mockJobExecutionHistoryConnection = (overrides?: Partial<JobExecutionHistoryConnection>): { __typename: 'JobExecutionHistoryConnection' } & JobExecutionHistoryConnection => {
+    return {
+        __typename: 'JobExecutionHistoryConnection',
+        edges: overrides && overrides.hasOwnProperty('edges') ? overrides.edges! : [mockJobExecutionHistoryEdge()],
+        pageInfo: overrides && overrides.hasOwnProperty('pageInfo') ? overrides.pageInfo! : mockPageInfo(),
+        totalCount: overrides && overrides.hasOwnProperty('totalCount') ? overrides.totalCount! : 5440,
+    };
+};
+
+export const mockJobExecutionHistoryEdge = (overrides?: Partial<JobExecutionHistoryEdge>): { __typename: 'JobExecutionHistoryEdge' } & JobExecutionHistoryEdge => {
+    return {
+        __typename: 'JobExecutionHistoryEdge',
+        cursor: overrides && overrides.hasOwnProperty('cursor') ? overrides.cursor! : string,
+        node: overrides && overrides.hasOwnProperty('node') ? overrides.node! : mockJobExecutionHistory(),
+    };
+};
+
 export const mockJobExecutionHistoryWhereInput = (overrides?: Partial<JobExecutionHistoryWhereInput>): JobExecutionHistoryWhereInput => {
     return {
         and: overrides && overrides.hasOwnProperty('and') ? overrides.and! : [mockJobExecutionHistoryWhereInput()],
@@ -439,9 +456,20 @@ export const mockPageInfo = (overrides?: Partial<PageInfo>): { __typename: 'Page
 export const mockProfile = (overrides?: Partial<Profile>): { __typename: 'Profile' } & Profile => {
     return {
         __typename: 'Profile',
+        city: overrides && overrides.hasOwnProperty('city') ? overrides.city! : 'sono',
+        cleanedDataS3Key: overrides && overrides.hasOwnProperty('cleanedDataS3Key') ? overrides.cleanedDataS3Key! : 'amicitia',
+        country: overrides && overrides.hasOwnProperty('country') ? overrides.country! : 'derelinquo',
         createdAt: overrides && overrides.hasOwnProperty('createdAt') ? overrides.createdAt! : 'valetudo',
+        educations: overrides && overrides.hasOwnProperty('educations') ? overrides.educations! : 'aestivus',
+        firstName: overrides && overrides.hasOwnProperty('firstName') ? overrides.firstName! : 'et',
+        geoData: overrides && overrides.hasOwnProperty('geoData') ? overrides.geoData! : 'caterva',
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '03d26b9d-1d30-4e29-8522-42f00fa8cf27',
+        lastName: overrides && overrides.hasOwnProperty('lastName') ? overrides.lastName! : 'adiuvo',
         name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'viridis',
+        positions: overrides && overrides.hasOwnProperty('positions') ? overrides.positions! : 'vulgus',
+        profileEntry: overrides && overrides.hasOwnProperty('profileEntry') ? overrides.profileEntry! : mockProfileEntry(),
+        rawDataS3Key: overrides && overrides.hasOwnProperty('rawDataS3Key') ? overrides.rawDataS3Key! : 'adfectus',
+        skills: overrides && overrides.hasOwnProperty('skills') ? overrides.skills! : 'decerno',
         sourceFile: overrides && overrides.hasOwnProperty('sourceFile') ? overrides.sourceFile! : 'aestus',
         title: overrides && overrides.hasOwnProperty('title') ? overrides.title! : 'succurro',
         updatedAt: overrides && overrides.hasOwnProperty('updatedAt') ? overrides.updatedAt! : 'titulus',
@@ -749,21 +777,6 @@ export const mockProfileWhereInput = (overrides?: Partial<ProfileWhereInput>): P
         lastNameNEQ: overrides && overrides.hasOwnProperty('lastNameNEQ') ? overrides.lastNameNEQ! : 'canis',
         lastNameNotIn: overrides && overrides.hasOwnProperty('lastNameNotIn') ? overrides.lastNameNotIn! : ['deserunt'],
         lastNameNotNil: overrides && overrides.hasOwnProperty('lastNameNotNil') ? overrides.lastNameNotNil! : true,
-        name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'esse',
-        nameContains: overrides && overrides.hasOwnProperty('nameContains') ? overrides.nameContains! : 'ars',
-        nameContainsFold: overrides && overrides.hasOwnProperty('nameContainsFold') ? overrides.nameContainsFold! : 'velum',
-        nameEqualFold: overrides && overrides.hasOwnProperty('nameEqualFold') ? overrides.nameEqualFold! : 'contigo',
-        nameGT: overrides && overrides.hasOwnProperty('nameGT') ? overrides.nameGT! : 'ipsa',
-        nameGTE: overrides && overrides.hasOwnProperty('nameGTE') ? overrides.nameGTE! : 'alius',
-        nameHasPrefix: overrides && overrides.hasOwnProperty('nameHasPrefix') ? overrides.nameHasPrefix! : 'corporis',
-        nameHasSuffix: overrides && overrides.hasOwnProperty('nameHasSuffix') ? overrides.nameHasSuffix! : 'admoveo',
-        nameIn: overrides && overrides.hasOwnProperty('nameIn') ? overrides.nameIn! : ['vel'],
-        nameIsNil: overrides && overrides.hasOwnProperty('nameIsNil') ? overrides.nameIsNil! : true,
-        nameLT: overrides && overrides.hasOwnProperty('nameLT') ? overrides.nameLT! : 'terminatio',
-        nameLTE: overrides && overrides.hasOwnProperty('nameLTE') ? overrides.nameLTE! : 'volva',
-        nameNEQ: overrides && overrides.hasOwnProperty('nameNEQ') ? overrides.nameNEQ! : 'condico',
-        nameNotIn: overrides && overrides.hasOwnProperty('nameNotIn') ? overrides.nameNotIn! : ['attollo'],
-        nameNotNil: overrides && overrides.hasOwnProperty('nameNotNil') ? overrides.nameNotNil! : true,
         not: overrides && overrides.hasOwnProperty('not') ? overrides.not! : mockProfileWhereInput(),
         or: overrides && overrides.hasOwnProperty('or') ? overrides.or! : [mockProfileWhereInput()],
         rawDataS3Key: overrides && overrides.hasOwnProperty('rawDataS3Key') ? overrides.rawDataS3Key! : 'creptio',

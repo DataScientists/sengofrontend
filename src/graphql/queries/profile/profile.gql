@@ -1,0 +1,5 @@
+query Profile($id: ID!) {
+  profile(id: $id) {
+    ...ProfileDetail
+  }
+}

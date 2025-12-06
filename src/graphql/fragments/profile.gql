@@ -1,3 +1,26 @@
+fragment ProfileDetail on Profile {
+  id
+  firstName
+  name
+  title
+  urn
+  country
+  city
+  educations
+  positions
+  skills
+  geoData
+  rawDataS3Key
+  cleanedDataS3Key
+  profileEntry {
+    ...ProfileEntry
+  }
+
+  sourceFile
+  createdAt
+  updatedAt
+}
+
 fragment Profile on Profile {
   id
   name

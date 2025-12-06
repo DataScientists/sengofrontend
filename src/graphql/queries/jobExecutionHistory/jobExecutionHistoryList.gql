@@ -1,0 +1,25 @@
+query JobHistoryList(
+  $after: Cursor
+  $first: Int
+  $before: Cursor
+  $last: Int
+  $where: JobExecutionHistoryWhereInput
+) {
+  jobExecutionHistoryList(
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+    where: $where
+  ) {
+    edges {
+      node {
+        ...JobExecutionHistory
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+    totalCount
+  }
+}

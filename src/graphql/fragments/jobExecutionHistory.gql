@@ -1,0 +1,15 @@
+fragment JobExecutionHistory on JobExecutionHistory {
+  id
+  jobName
+  status
+  startedAt
+  completedAt
+  durationSeconds
+  totalProcessed
+  successfulCount
+  failedCount
+  apiCallsMade
+  quotaRemaining
+  errorSummary
+  createdAt
+}

@@ -1,0 +1,5 @@
+query JobHistory($id: ID!) {
+  jobExecutionHistory(id: $id) {
+    ...JobExecutionHistory
+  }
+}

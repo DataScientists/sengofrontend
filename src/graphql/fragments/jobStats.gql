@@ -1,0 +1,7 @@
+fragment JobStats on JobStats {
+  totalExecutions
+  successRate
+  averageDuration
+  totalProfiles
+  totalAPICallsMade
+}
