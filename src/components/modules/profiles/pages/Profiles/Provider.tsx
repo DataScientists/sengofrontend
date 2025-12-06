@@ -1,6 +1,6 @@
 import { useProfilesService } from "@service/profiles";
 import { createProvider } from "@shared/react/createProvider";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const useValue = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -36,6 +36,12 @@ const useValue = () => {
       setCurrentPage((prev) => prev - 1);
     }
   }, [data, searchProfiles, searchTerm]);
+
+  useEffect(() => {
+    searchProfiles({
+      first: PAGE_SIZE,
+    });
+  }, [searchProfiles]);
 
   return {
     searchTerm,

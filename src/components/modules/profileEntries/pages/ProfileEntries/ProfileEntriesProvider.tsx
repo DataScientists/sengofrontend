@@ -30,8 +30,7 @@ const useValue = () => {
   }, [searchProfileEntries, searchTerm, status]);
 
   const handleFetchProfileEntry = useCallback(
-    async (id) => {
-      console.log(id, "fetch id");
+    async (id: string) => {
       await fetchProfileEntry({ id });
       // Refresh the list after creating a new entry
       closeModal();

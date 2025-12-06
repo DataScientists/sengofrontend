@@ -1,7 +1,7 @@
-import { useProfilesLazyQuery } from '@graphql/hooks';
-import { useCallback } from 'react';
+import { useProfilesLazyQuery } from "@graphql/hooks";
+import { useCallback } from "react";
 
-import type { ProfilesResponse, SearchProfilesParams } from '../types';
+import type { ProfilesResponse, SearchProfilesParams } from "../types";
 
 type ProfilesReturn = {
   searchProfiles: (params: SearchProfilesParams) => Promise<ProfilesResponse>;
@@ -14,56 +14,58 @@ export const useProfiles = (): ProfilesReturn => {
   const [fetchProfiles, { data, loading, error }] = useProfilesLazyQuery();
 
   const searchProfiles = useCallback(
-    async ({ searchTerm, ...paginationParams }: SearchProfilesParams): Promise<ProfilesResponse> => {
+    async ({
+      searchTerm,
+      ...paginationParams
+    }: SearchProfilesParams): Promise<ProfilesResponse> => {
       try {
         // Make sure we have at least one pagination parameter
         const validPaginationParams = {
           ...paginationParams,
         };
-        
+
         // If no pagination params are provided, default to first: 10
         if (!validPaginationParams.first && !validPaginationParams.last) {
           validPaginationParams.first = 10;
         }
-        
+
         // Build the where clause based on search term
-        const whereClause = searchTerm 
+        const whereClause = searchTerm
           ? {
-            or:[
-              { nameContainsFold: searchTerm },
-              { titleContainsFold: searchTerm }
-            ]
-              
-            } 
+              or: [
+                { firstNameContainsFold: searchTerm },
+                { lastNameContainsFold: searchTerm },
+                { titleContainsFold: searchTerm },
+              ],
+            }
           : {};
-        console.log(whereClause, "whereclause")
 
         // Only include the pagination parameters that are actually needed
         // This prevents the "Variable $last is never used" error
         const queryVariables: any = {
-          where: whereClause
+          where: whereClause,
         };
-        
+
         // Only add the pagination parameters that have values
         if (validPaginationParams.first) {
           queryVariables.first = validPaginationParams.first;
         }
-        
+
         if (validPaginationParams.after) {
           queryVariables.after = validPaginationParams.after;
         }
-        
+
         if (validPaginationParams.before) {
           queryVariables.before = validPaginationParams.before;
         }
-        
+
         // Only add 'last' if we're actually using it for backward pagination
         if (validPaginationParams.last) {
           queryVariables.last = validPaginationParams.last;
         }
-        
+
         const { data: response } = await fetchProfiles({
-          variables: queryVariables
+          variables: queryVariables,
         });
 
         if (!response?.profiles) {
@@ -83,10 +85,11 @@ export const useProfiles = (): ProfilesReturn => {
         return {
           edges: response.profiles.edges,
           pageInfo: response.profiles.pageInfo,
-          totalCount: response.profiles.totalCount
+          totalCount: response.profiles.totalCount,
         };
       } catch (err) {
-        console.error('Error searching profiles:', err);
+        console.error("Error searching profiles:", err);
+
         return {
           edges: [],
           pageInfo: {
@@ -99,17 +102,19 @@ export const useProfiles = (): ProfilesReturn => {
         };
       }
     },
-    [fetchProfiles]
+    [fetchProfiles],
   );
 
   return {
     searchProfiles,
     loading,
     error,
-    data: data?.profiles ? {
-      edges: data.profiles.edges,
-      pageInfo: data.profiles.pageInfo,
-      totalCount: data.profiles.totalCount
-    } : null,
+    data: data?.profiles
+      ? {
+          edges: data.profiles.edges,
+          pageInfo: data.profiles.pageInfo,
+          totalCount: data.profiles.totalCount,
+        }
+      : null,
   };
 };

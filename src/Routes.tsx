@@ -1,5 +1,6 @@
 import { Spinner } from "@chakra-ui/react";
 import { AuthRouter } from "@components/modules/auth/index";
+import { ProfileEntriesRoute } from "@components/modules/profileEntries";
 import { ProfilesRoute } from "@components/modules/profiles";
 import { AppLayout } from "@components/templates";
 import { WindowTitle } from "@components/ui/atoms";
@@ -48,6 +49,7 @@ export const Routes: React.FCWithChildren = ({ children }) => {
                   <AppLayout>
                     <SentryRoutes>
                       {ProfilesRoute}
+                      {ProfileEntriesRoute}
                       {children ?? null}
                     </SentryRoutes>
                   </AppLayout>
