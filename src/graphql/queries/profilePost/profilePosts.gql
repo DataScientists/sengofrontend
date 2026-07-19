@@ -1,0 +1,5 @@
+query ProfilePosts($username: String!) {
+  profilePosts(username: $username) {
+    ...ProfilePost
+  }
+}

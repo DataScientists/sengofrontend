@@ -1,7 +1,9 @@
-import { Container, Grid, GridItem, Heading } from "@chakra-ui/react";
+import { Container, Heading } from "@chakra-ui/react";
 import { ProfileList } from "@components/features/organisms/ProfileList";
-import { ProfileTitleChart } from "@components/features/organisms/ProfileTitleChart";
 import { SearchBar } from "@components/features/organisms/SearchBar";
+// Title chart temporarily disabled — restore the imports below when re-enabling.
+// import { Grid, GridItem } from "@chakra-ui/react";
+// import { ProfileTitleChart } from "@components/features/organisms/ProfileTitleChart";
 import { Box } from "@components/ui/atoms";
 
 import { ProfilesProvider, useProfilesContext } from "./Provider";
@@ -41,6 +43,8 @@ const WrappedComponent: React.FC = () => {
           setSearchTerm={setSearchTerm}
           handleSearch={() => void handleSearch()}
         />
+
+        {/* Title chart temporarily disabled.
         <Grid templateColumns={{ base: "1fr", lg: "1fr 2fr" }} gap={6} mt={6}>
           <GridItem>
             <Box
@@ -54,16 +58,19 @@ const WrappedComponent: React.FC = () => {
             </Box>
           </GridItem>
           <GridItem>
-            <ProfileList
-              data={data}
-              loading={loading}
-              error={error}
-              currentPage={currentPage}
-              handlePrevPage={() => void handlePrevPage()}
-              handleNextPage={() => void handleNextPage()}
-            />
+            ...profile list was here...
           </GridItem>
         </Grid>
+        */}
+        <Box mt={6} />
+        <ProfileList
+          data={data}
+          loading={loading}
+          error={error}
+          currentPage={currentPage}
+          handlePrevPage={() => void handlePrevPage()}
+          handleNextPage={() => void handleNextPage()}
+        />
       </Container>
     </>
   );

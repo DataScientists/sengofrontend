@@ -1,7 +1,10 @@
 fragment ProfileDetail on Profile {
   id
   firstName
+  lastName
   name
+  username
+  headline
   title
   urn
   country

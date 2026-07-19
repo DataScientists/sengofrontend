@@ -1,18 +1,16 @@
-import {
-    Box,
-    Container,
-    Heading,
-    Text,
-    VStack,
-    Button,
-    HStack,
-    Badge,
-    Code,
-} from "@chakra-ui/react";
-import { Avatar } from "@components/ui/molecules/Avatar";
+import { Box, Button, Container, Text, VStack } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { ProfileDetailProvider, useProfileDetailContext } from "./Provider";
 import React from "react";
+
+import {
+    EducationsSection,
+    PositionsSection,
+    PostsSection,
+    ProfileHeader,
+    ProfileInfoGrid,
+    SkillsSection,
+} from "./components";
+import { ProfileDetailProvider, useProfileDetailContext } from "./Provider";
 
 export const Component: React.FC = () => {
     return (
@@ -23,7 +21,8 @@ export const Component: React.FC = () => {
 };
 
 const WrappedComponent: React.FC = () => {
-    const { data, loading, error } = useProfileDetailContext();
+    const { data, loading, error, username, posts, postsLoading, postsError } =
+        useProfileDetailContext();
     const navigate = useNavigate();
 
     if (loading) {
@@ -53,54 +52,17 @@ const WrappedComponent: React.FC = () => {
             </Button>
             <Box borderWidth="1px" borderRadius="lg" p={6} bg="white">
                 <VStack align="start" gap={6}>
-                    <HStack gap={4}>
-                        <Avatar size="xl" name={profile.name} />
-                        <VStack align="start" gap={1}>
-                            <Heading size="lg">{profile.name}</Heading>
-                            <Text color="gray.600">{profile.title}</Text>
-                            {profile.urn && <Badge colorPalette="blue">{profile.urn}</Badge>}
-                        </VStack>
-                    </HStack>
-
-                    <Box>
-                        <Heading size="md" mb={2}>
-                            Location
-                        </Heading>
-                        <Text>
-                            {[profile.city, profile.country].filter(Boolean).join(", ") || "N/A"}
-                        </Text>
-                    </Box>
-
-                    {profile.skills && (
-                        <Box>
-                            <Heading size="md" mb={2}>
-                                Skills
-                            </Heading>
-                            <Text>{Array.isArray(profile.skills) ? profile.skills.join(", ") : JSON.stringify(profile.skills)}</Text>
-                        </Box>
-                    )}
-
-                    {profile.educations && (
-                        <Box w="full">
-                            <Heading size="md" mb={2}>
-                                Educations
-                            </Heading>
-                            <Code w="full" p={2} display="block" whiteSpace="pre-wrap">
-                                {JSON.stringify(profile.educations, null, 2)}
-                            </Code>
-                        </Box>
-                    )}
-
-                    {profile.positions && (
-                        <Box w="full">
-                            <Heading size="md" mb={2}>
-                                Positions
-                            </Heading>
-                            <Code w="full" p={2} display="block" whiteSpace="pre-wrap">
-                                {JSON.stringify(profile.positions, null, 2)}
-                            </Code>
-                        </Box>
-                    )}
+                    <ProfileHeader profile={profile} />
+                    <ProfileInfoGrid profile={profile} />
+                    <SkillsSection skills={profile.skills} />
+                    <EducationsSection educations={profile.educations} />
+                    <PositionsSection positions={profile.positions} />
+                    <PostsSection
+                        username={username}
+                        posts={posts}
+                        loading={postsLoading}
+                        error={postsError}
+                    />
                 </VStack>
             </Box>
         </Container>

@@ -11,7 +11,14 @@ export const DashboardPage: React.FC = () => {
                 <Box maxW="sm">
                     <APIQuotaUsageWidget />
                 </Box>
-                <JobStatsWidget jobName="profile_fetcher" />
+                <JobStatsWidget
+                    jobName="profile_fetcher"
+                    title="Job Stats: Profile Fetcher"
+                />
+                <JobStatsWidget
+                    jobName="profile_posts_fetcher"
+                    title="Job Stats: Profile Posts Fetch"
+                />
             </VStack>
         </Box>
     );

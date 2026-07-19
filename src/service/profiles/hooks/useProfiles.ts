@@ -29,14 +29,18 @@ export const useProfiles = (): ProfilesReturn => {
           validPaginationParams.first = 10;
         }
 
-        // Build the where clause based on search term
-        const whereClause = searchTerm
+        // Build the where clause based on search term. Search is by name:
+        // every word must match either the first or the last name, so both
+        // "erick" and "erick cedeno" find the profile.
+        const words = (searchTerm ?? "").split(/\s+/).filter(Boolean);
+        const whereClause = words.length
           ? {
-              or: [
-                { firstNameContainsFold: searchTerm },
-                { lastNameContainsFold: searchTerm },
-                { titleContainsFold: searchTerm },
-              ],
+              and: words.map((word) => ({
+                or: [
+                  { firstNameContainsFold: word },
+                  { lastNameContainsFold: word },
+                ],
+              })),
             }
           : {};
 

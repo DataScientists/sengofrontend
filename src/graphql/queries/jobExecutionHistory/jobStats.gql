@@ -1,5 +1,5 @@
-query JobStats($jobName: String!, $days: Int) {
-  jobStats(jobName: $jobName, days: $days) {
+query JobStats($jobName: String!, $month: Int, $year: Int) {
+  jobStats(jobName: $jobName, month: $month, year: $year) {
     ...JobStats
   }
 }

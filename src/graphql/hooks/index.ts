@@ -82,7 +82,10 @@ export const ProfileDetailFragmentDoc = gql`
     fragment ProfileDetail on Profile {
   id
   firstName
+  lastName
   name
+  username
+  headline
   title
   urn
   country
@@ -115,6 +118,40 @@ export const ProfileTitleGroupFragmentDoc = gql`
   count
 }
     `;
+export const ProfilePostItemFragmentDoc = gql`
+    fragment ProfilePostItem on ProfilePostItem {
+  id
+  profileUsername
+  postUrn
+  postUrl
+  text
+  contentType
+  isRepost
+  totalReactions
+  likeCount
+  commentsCount
+  repostsCount
+  empathyCount
+  praiseCount
+  funnyCount
+  interestCount
+  postedAt
+  createdAt
+}
+    `;
+export const ProfilePostFragmentDoc = gql`
+    fragment ProfilePost on ProfilePost {
+  id
+  profileUsername
+  fetchStatus
+  s3Key
+  errorMessage
+  createdAt
+  items {
+    ...ProfilePostItem
+  }
+}
+    ${ProfilePostItemFragmentDoc}`;
 export const RefreshTokenFragmentFragmentDoc = gql`
     fragment RefreshTokenFragment on RefreshTokenPayload {
   accessToken
@@ -289,6 +326,47 @@ export type CurrentQuotaStatusQueryHookResult = ReturnType<typeof useCurrentQuot
 export type CurrentQuotaStatusLazyQueryHookResult = ReturnType<typeof useCurrentQuotaStatusLazyQuery>;
 export type CurrentQuotaStatusSuspenseQueryHookResult = ReturnType<typeof useCurrentQuotaStatusSuspenseQuery>;
 export type CurrentQuotaStatusQueryResult = Apollo.QueryResult<import('../types').CurrentQuotaStatusQuery, import('../types').CurrentQuotaStatusQueryVariables>;
+export const QuotaStatusDocument = gql`
+    query QuotaStatus($month: Int!, $year: Int!) {
+  quotaStatus(month: $month, year: $year) {
+    ...APIQuotaTracker
+  }
+}
+    ${ApiQuotaTrackerFragmentDoc}`;
+
+/**
+ * __useQuotaStatusQuery__
+ *
+ * To run a query within a React component, call `useQuotaStatusQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQuotaStatusQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQuotaStatusQuery({
+ *   variables: {
+ *      month: // value for 'month'
+ *      year: // value for 'year'
+ *   },
+ * });
+ */
+export function useQuotaStatusQuery(baseOptions: Apollo.QueryHookOptions<import('../types').QuotaStatusQuery, import('../types').QuotaStatusQueryVariables> & ({ variables: import('../types').QuotaStatusQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<import('../types').QuotaStatusQuery, import('../types').QuotaStatusQueryVariables>(QuotaStatusDocument, options);
+      }
+export function useQuotaStatusLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<import('../types').QuotaStatusQuery, import('../types').QuotaStatusQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<import('../types').QuotaStatusQuery, import('../types').QuotaStatusQueryVariables>(QuotaStatusDocument, options);
+        }
+export function useQuotaStatusSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<import('../types').QuotaStatusQuery, import('../types').QuotaStatusQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<import('../types').QuotaStatusQuery, import('../types').QuotaStatusQueryVariables>(QuotaStatusDocument, options);
+        }
+export type QuotaStatusQueryHookResult = ReturnType<typeof useQuotaStatusQuery>;
+export type QuotaStatusLazyQueryHookResult = ReturnType<typeof useQuotaStatusLazyQuery>;
+export type QuotaStatusSuspenseQueryHookResult = ReturnType<typeof useQuotaStatusSuspenseQuery>;
+export type QuotaStatusQueryResult = Apollo.QueryResult<import('../types').QuotaStatusQuery, import('../types').QuotaStatusQueryVariables>;
 export const JobHistoryListDocument = gql`
     query JobHistoryList($after: Cursor, $first: Int, $before: Cursor, $last: Int, $where: JobExecutionHistoryWhereInput) {
   jobExecutionHistoryList(
@@ -389,8 +467,8 @@ export type JobHistoryLazyQueryHookResult = ReturnType<typeof useJobHistoryLazyQ
 export type JobHistorySuspenseQueryHookResult = ReturnType<typeof useJobHistorySuspenseQuery>;
 export type JobHistoryQueryResult = Apollo.QueryResult<import('../types').JobHistoryQuery, import('../types').JobHistoryQueryVariables>;
 export const JobStatsDocument = gql`
-    query JobStats($jobName: String!, $days: Int) {
-  jobStats(jobName: $jobName, days: $days) {
+    query JobStats($jobName: String!, $month: Int, $year: Int) {
+  jobStats(jobName: $jobName, month: $month, year: $year) {
     ...JobStats
   }
 }
@@ -409,7 +487,8 @@ export const JobStatsDocument = gql`
  * const { data, loading, error } = useJobStatsQuery({
  *   variables: {
  *      jobName: // value for 'jobName'
- *      days: // value for 'days'
+ *      month: // value for 'month'
+ *      year: // value for 'year'
  *   },
  * });
  */
@@ -569,6 +648,46 @@ export type ProfilesQueryHookResult = ReturnType<typeof useProfilesQuery>;
 export type ProfilesLazyQueryHookResult = ReturnType<typeof useProfilesLazyQuery>;
 export type ProfilesSuspenseQueryHookResult = ReturnType<typeof useProfilesSuspenseQuery>;
 export type ProfilesQueryResult = Apollo.QueryResult<import('../types').ProfilesQuery, import('../types').ProfilesQueryVariables>;
+export const ProfilePostsDocument = gql`
+    query ProfilePosts($username: String!) {
+  profilePosts(username: $username) {
+    ...ProfilePost
+  }
+}
+    ${ProfilePostFragmentDoc}`;
+
+/**
+ * __useProfilePostsQuery__
+ *
+ * To run a query within a React component, call `useProfilePostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProfilePostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProfilePostsQuery({
+ *   variables: {
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useProfilePostsQuery(baseOptions: Apollo.QueryHookOptions<import('../types').ProfilePostsQuery, import('../types').ProfilePostsQueryVariables> & ({ variables: import('../types').ProfilePostsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<import('../types').ProfilePostsQuery, import('../types').ProfilePostsQueryVariables>(ProfilePostsDocument, options);
+      }
+export function useProfilePostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<import('../types').ProfilePostsQuery, import('../types').ProfilePostsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<import('../types').ProfilePostsQuery, import('../types').ProfilePostsQueryVariables>(ProfilePostsDocument, options);
+        }
+export function useProfilePostsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<import('../types').ProfilePostsQuery, import('../types').ProfilePostsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<import('../types').ProfilePostsQuery, import('../types').ProfilePostsQueryVariables>(ProfilePostsDocument, options);
+        }
+export type ProfilePostsQueryHookResult = ReturnType<typeof useProfilePostsQuery>;
+export type ProfilePostsLazyQueryHookResult = ReturnType<typeof useProfilePostsLazyQuery>;
+export type ProfilePostsSuspenseQueryHookResult = ReturnType<typeof useProfilePostsSuspenseQuery>;
+export type ProfilePostsQueryResult = Apollo.QueryResult<import('../types').ProfilePostsQuery, import('../types').ProfilePostsQueryVariables>;
 export const ProfileEntriesDocument = gql`
     query ProfileEntries($after: Cursor, $first: Int, $before: Cursor, $last: Int, $where: ProfileEntryWhereInput) {
   profileEntries(

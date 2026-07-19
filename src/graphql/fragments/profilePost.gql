@@ -1,0 +1,31 @@
+fragment ProfilePostItem on ProfilePostItem {
+  id
+  profileUsername
+  postUrn
+  postUrl
+  text
+  contentType
+  isRepost
+  totalReactions
+  likeCount
+  commentsCount
+  repostsCount
+  empathyCount
+  praiseCount
+  funnyCount
+  interestCount
+  postedAt
+  createdAt
+}
+
+fragment ProfilePost on ProfilePost {
+  id
+  profileUsername
+  fetchStatus
+  s3Key
+  errorMessage
+  createdAt
+  items {
+    ...ProfilePostItem
+  }
+}

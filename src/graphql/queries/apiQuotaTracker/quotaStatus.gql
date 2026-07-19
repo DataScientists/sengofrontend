@@ -1,0 +1,5 @@
+query QuotaStatus($month: Int!, $year: Int!) {
+  quotaStatus(month: $month, year: $year) {
+    ...APIQuotaTracker
+  }
+}
